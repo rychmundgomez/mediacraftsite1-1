@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MediaCraft — The Ultimate Resource</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23345b63'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Poppins,Arial' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
+
+  <meta name="description" content="MediaCraft — crafted design, film, audio and product experiences. Reimagined single-page UI." />
+
+  <!-- Compiled & minified CSS (built with `npm run build`) -->
+  <link rel="stylesheet" href="dist/styles.min.css">
+</head>
+<body class="no-cursor" aria-label="MediaCraft reimagined single page">
+
+  <!-- Custom cursor -->
+  <div id="cursor" class="cursor-dot" aria-hidden="true" style="background:radial-gradient(circle at 30% 30%, rgba(255,183,3,0.95), rgba(0,180,216,0.65));box-shadow:0 8px 30px rgba(0,0,0,0.6);"></div>
+
+  <!-- Progress -->
+  <div id="progress" class="page-progress" aria-hidden="true" role="presentation"></div>
+
+  <main class="shell" id="main" role="main">
+
+    <!-- Top navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="MediaCraft home">
+        <div class="brand-mark" aria-hidden="true">
+          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="MediaCraft mark">
+        </div>
+        <div>
+          <div class="brand-name">MediaCraft</div>
+          <div class="brand-tag">Build · Brand · Engage</div>
+        </div>
+      </a>
+
+      <div class="nav-actions" role="group" aria-label="Primary actions">
+        <button class="btn" id="hireBtn" type="button">Hire a Creator</button>
+        <button class="btn ghost" id="portfolioBtn" type="button">Portfolio</button>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero" id="home" aria-labelledby="heroTitle">
+      <div class="hero-grid">
+        <div class="kicker">The Ultimate Resource</div>
+        <h1 id="heroTitle" class="title">Your Digital Command Center For Creative Excellence.</h1>
+
+        <p class="lead">
+          At MediaCraft we turn bold ideas into powerful realities — from sleek websites and standout brands to chart-ready music and marketing that moves people. We connect you with the talent to make it happen. Your vision, expertly crafted.
+        </p>
+
+        <p class="lead"><strong>Build | Brand | Engage.</strong></p>
+
+        <p class="lead">... <span class="typewriter" aria-hidden="true"></span></p>
+
+        <div class="section-head">
+          <strong style="color:#fff">Core Services</strong>
+          <small class="muted">Swipe or arrow through</small>
+        </div>
+
+        <!-- Core services: carousel/grid -->
+        <div class="services" role="list" aria-label="Services carousel" aria-roledescription="carousel" tabindex="0">
+          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc1" data-index="0">
+            <h4 id="svc1">Brand Strategy</h4>
+            <p>Identity systems, tone, and go-to-market craft.</p>
+          </article>
+
+          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc2" data-index="1">
+            <h4 id="svc2">Video & Motion</h4>
+            <p>Short films, ads, and platform-optimised edits.</p>
+          </article>
+
+          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc3" data-index="2">
+            <h4 id="svc3">Audio Production</h4>
+            <p>Compositions, sound design and sonic branding.</p>
+          </article>
+
+          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc4" data-index="3">
+            <h4 id="svc4">Product Design</h4>
+            <p>UX/UI, prototypes and interaction systems.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="visual-stage" aria-hidden="true">
+        <div class="layer" data-base-transform="translate3d(-8px,-8px,0) scale(1.00)" style="transform:translate3d(-8px,-8px,0) scale(1.00);">
+          <div class="card-visual" aria-hidden="true">
+            <h3>Studio Snapshot</h3>
+            <p>Small teams, big ideas!</p>
+          </div>
+        </div>
+
+        <div class="layer" data-base-transform="translate3d(10px,10px,0) scale(1.05)" style="transform:translate3d(10px,10px,0) scale(1.05);">
+          <div class="card-visual visual-feature" aria-hidden="true">
+            <h3>Featured Project</h3>
+            <p>Increased brand lift and reach.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Portfolio -->
+    <section aria-labelledby="works" style="display:flex;flex-direction:column;gap:12px">
+      <div class="section-head">
+        <h2 id="works" style="margin:0;color:#fff">Selected Work</h2>
+        <div class="muted">A rotation selection of projects</div>
+      </div>
+
+      <div class="mosaic-wrap" role="list" aria-label="Selected projects">
+        <!-- 1 -->
+        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m1">
+          <img
+            src="https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg"
+            srcset="
+              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 1200w,
+              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 800w,
+              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 480w
+            "
+            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
+            alt="Lunar Tea — Visual identity snapshot"
+            loading="lazy" decoding="async" />
+          <div class="mosaic-meta">
+            <h5 id="m1">FrameCraft — Video Editing & Creation</h5>
+            <p>Direction, cutting, effects, and final mastering.</p>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m2">
+          <img
+            src="https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg"
+            srcset="
+              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 1200w,
+              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 800w,
+              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 480w
+            "
+            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
+            alt="A Quiet Moment — short film still"
+            loading="lazy" decoding="async" />
+          <div class="mosaic-meta">
+            <h5 id="m2">PixelStory — Graphic Design</h5>
+            <p>Layouts, illustrations, and creative visual storytelling.</p>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m3">
+          <img
+            src="https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg"
+            srcset="
+              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 1200w,
+              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 800w,
+              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 480w
+            "
+            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
+            alt="Night Drive — studio console"
+            loading="lazy" decoding="async" />
+          <div class="mosaic-meta">
+            <h5 id="m3">CodeForge — Coding & Programming</h5>
+            <p>Development, optimization, and interactive solutions.</p>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m4">
+          <img
+            src="https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png"
+            srcset="
+              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 1200w,
+              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 800w,
+              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 480w
+            "
+            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
+            alt="Trackr — product UI sample"
+            loading="lazy" decoding="async" />
+          <div class="mosaic-meta">
+            <h5 id="m4">BrandAura — Branding & Visual Identity</h5>
+            <p>Logo systems, style guides, and market presence.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Our Services -->
+    <section id="ourServices" aria-labelledby="ourServicesTitle">
+      <h3 id="ourServicesTitle" style="margin:0;color:#fff">Our Services</h3>
+      <div class="services-grid" role="list" aria-label="Detailed services">
+        <div class="card" role="listitem">
+          <h3>Graphic & Brand Designing</h3>
+          <p>Logos, branding, and visual assets crafted to make an impact.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Video & Effects Editing</h3>
+          <p>Producing compelling visuals that speak to your audience.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Music & Audio Editing</h3>
+          <p>High-quality music production and sound engineering.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Web & App Development</h3>
+          <p>Custom websites, apps, and platforms built by expert developers.</p>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Digital Marketing</h3>
+          <p>Targeted strategies for growth, visibility, and engagement.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How we work -->
+    <section aria-labelledby="how" style="display:flex;flex-direction:column;gap:12px">
+      <div class="section-head">
+        <h2 id="how" style="margin:0;color:#fff">How We Work</h2>
+        <div class="muted">A simple, humane process</div>
+      </div>
+
+      <div class="timeline" role="list">
+        <div class="tl-item reveal-hidden" role="listitem">
+          <div class="tl-bullet" aria-hidden="true"></div>
+          <div class="tl-body">
+            <h6>Onboard & Assign</h6>
+            <p>We listen, understand your vision and match you with the right expert.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal-hidden" role="listitem">
+          <div class="tl-bullet" aria-hidden="true" style="background:var(--primary)"></div>
+          <div class="tl-body">
+            <h6>Manage & Review</h6>
+            <p>We oversee project execution and quality control.</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal-hidden" role="listitem">
+          <div class="tl-bullet" aria-hidden="true" style="background:linear-gradient(90deg,var(--primary),var(--accent))"></div>
+          <div class="tl-body">
+            <h6>Build, Polish & Deliver</h6>
+            <p>You get high-quality delivery, seamless iteration, and smooth handoff.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact footer -->
+    <footer class="sitefoot" role="contentinfo" aria-labelledby="contactTitle">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <div>
+          <h3 id="contactTitle" style="margin:0;color:#fff">Ready to begin?</h3>
+          <p class="muted">Tell us about your project and we'll reply within one business day.</p>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <a class="btn" href="https://wa.me/233540281796" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+          <a class="btn ghost" href="mailto:gomezrychmund244@gmail.com">Email Us</a>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form" novalidate>
+          <input type="text" name="name" placeholder="Your name" aria-label="Your name" required />
+          <input type="email" name="email" placeholder="Email" aria-label="Email address" required />
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <small class="muted">© <span id="yr"></span> MediaCraft — All rights reserved</small>
+        <small class="muted">Designed for accessibility & performance</small>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Accessible modal (Hire form) -->
+  <dialog id="hireModal" aria-labelledby="hireTitle">
+    <form method="dialog" style="padding:18px;min-width:320px;max-width:620px;display:flex;flex-direction:column;gap:10px">
+      <h3 id="hireTitle">Quick Brief</h3>
+      <label>
+        <span class="sr-only">Your name</span>
+        <input name="fullname" placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)" required />
+      </label>
+      <label>
+        <span class="sr-only">Project summary</span>
+        <textarea name="project" rows="4" placeholder="Short project summary" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)" required></textarea>
+      </label>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn" type="submit">Send</button>
+        <button class="btn ghost" type="button" id="closeHire">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Compiled & minified JS (built with `npm run build`) -->
+  <script src="dist/script.min.js" defer></script>
+</body>
+</html>
