@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Ultimate Resource</title>
-
-  <!-- Fonts -->
+  <title>The Ultimate Resource — MediaCraft</title>
+  <meta name="description" content="The Ultimate Resource — crafted design, film, audio and product experiences. Reimagined single-page UI." />
+  <!-- Preconnect for faster font load -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
   <!-- Inline SVG favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23345b63'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Poppins,Arial' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
 
-  <meta name="description" content="The Ultimate Resource — crafted design, film, audio and product experiences. Reimagined single-page UI." />
-
   <style>
-    /* ========================== 
+    /* ==========================
        Variables & palette
        ========================== */
     :root{
@@ -24,10 +23,13 @@
       --accent: #00b4d8;
       --muted: #9aa7b2;
       --glass: rgba(255,255,255,0.04);
-      --radius: 16px;
-      --gap: 18px;
+      --radius: 12px;
+      --gap: 16px;
       --ease: cubic-bezier(.2,.9,.25,1);
       --max-width: 1200px;
+      --card-shadow: 0 16px 40px rgba(0,0,0,0.55);
+      --focus: 0 0 0 4px rgba(255,183,3,0.12);
+      --ui-transition: 240ms var(--ease);
     }
 
     /* ==========================
@@ -43,7 +45,8 @@
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
       line-height:1.45;
       padding:16px;
-      overflow-y:scroll;
+      overflow-y:overlay;
+      -webkit-font-smoothing:antialiased;
     }
 
     /* Reduced motion support */
@@ -67,25 +70,28 @@
       display:flex;
       flex-direction:column;
       gap:24px;
+      padding-bottom:40px;
     }
 
-    /* Top navigation (menu removed) */
+    /* Top navigation */
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
       padding:10px;border-radius:12px;backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.02);
     }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--primary)}
-    .brand-mark{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#0af);color:#02111a;font-weight:900;font-size:1.05rem}
-    /* <-- tiny helper so the provided image fills the mark without changing the rest of your styles --> */
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--primary)}
+    .brand-mark{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#0af);color:#02111a;font-weight:900;font-size:1.05rem;flex-shrink:0}
     .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;}
-    .brand-name{font-weight:700;color:#fff}
-    .brand-tag{font-family:'Playfair Display',serif;color:var(--muted);font-style:italic;font-size:0.85rem}
+    .brand-name{font-weight:700;color:#fff;line-height:1}
+    .brand-tag{font-family:'Playfair Display',serif;color:var(--muted);font-style:italic;font-size:0.82rem}
 
     .nav-actions{display:flex;gap:10px;align-items:center}
     .btn{
-      border:0;padding:10px 14px;border-radius:10px;background:var(--primary);color:#071027;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      border:0;padding:10px 14px;border-radius:10px;background:var(--primary);color:#071027;font-weight:700;cursor:pointer;box-shadow:var(--card-shadow);
+      transition:transform var(--ui-transition), box-shadow var(--ui-transition);
     }
+    .btn:active{transform:translateY(1px)}
     .ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
 
     /* Hero */
@@ -102,21 +108,22 @@
     .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block}
     .layer{
       position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform 700ms var(--ease);
+      will-change:transform;
     }
-    .card-visual{width:86%;max-width:520px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));box-shadow:0 20px 60px rgba(0,0,0,0.6);color:#fff}
+    .card-visual{width:86%;max-width:520px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.05));box-shadow:var(--card-shadow);color:#fff}
     .card-visual h3{margin:0 0 6px 0}
     .card-visual p{margin:0;color:var(--muted)}
 
-    /* Core services in hero (mobile carousel, desktop grid) */
+    /* Services carousel / grid */
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
     .services{
-      display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
+      display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
       padding-top:6px;
     }
     .svc{min-width:260px;flex:0 0 auto;background:linear-gradient(90deg,rgba(0,180,216,0.06),rgba(255,183,3,0.02));border-radius:12px;padding:14px;color:#fff;scroll-snap-align:center}
-    .svc h4{margin:0 0 8px 0}
+    .svc h4{margin:0 0 8px 0;color:#fff}
     .svc p{margin:0;color:var(--muted)}
 
-    /* On wider screens, layout the hero services as a grid for better desktop viewing */
     @media (min-width:720px){
       .services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;overflow:visible}
     }
@@ -124,7 +131,7 @@
       .services{grid-template-columns:repeat(4,1fr)}
     }
 
-    /* Our Services (How we work) — responsive card grid */
+    /* Services grid (detailed) */
     .services-grid{
       display:grid;
       gap:14px;
@@ -146,7 +153,7 @@
       .services-grid{grid-template-columns:repeat(3,1fr)}
     }
 
-    /* Mosaic (CSS columns) */
+    /* Mosaic */
     .mosaic-wrap{column-count:1;column-gap:12px;margin-top:6px}
     .mosaic-card{break-inside:avoid;margin:0 0 12px;border-radius:12px;overflow:hidden;position:relative;background:#0b1b22;border:1px solid rgba(255,255,255,0.03)}
     .mosaic-card img{width:100%;display:block;height:auto;aspect-ratio:16/10;object-fit:cover;vertical-align:top;transition:transform 480ms var(--ease)}
@@ -174,27 +181,22 @@
     .micro-form{display:flex;gap:8px}
     .micro-form input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff}
 
-    /* Micro-form small panel style (contained to footer) */
     .micro-form.small-panel{flex-direction:column;max-width:420px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:10px}
     .micro-form.small-panel input, .micro-form.small-panel button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
 
     /* Accessibility & focus */
     :focus{outline:none}
-    a:focus, button:focus, input:focus {box-shadow:0 0 0 4px rgba(255,183,3,0.12);border-radius:8px}
+    a:focus, button:focus, input:focus {box-shadow:var(--focus);border-radius:8px}
 
     /* Reveal initial state */
     .reveal-hidden { transform: translateY(12px); opacity: 0; transition: transform 600ms var(--ease), opacity 540ms var(--ease); }
 
-    /* Micro-UI: custom cursor + typing microcopy */
+    /* Custom cursor + typing microcopy */
     .no-cursor{cursor:none}
-    .cursor-dot{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:opacity 160ms}
+    .cursor-dot{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:opacity 160ms,transform 260ms;opacity:1}
     .typewriter{display:inline-block;color:var(--primary);font-weight:700}
 
-    /* Helpers */
     .muted{color:var(--muted)}
-    .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-
-    /* Page progress */
     .page-progress{
       position:fixed;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--primary));
       transform-origin:left;transform:scaleX(0);transition:transform 160ms linear; z-index:80;
@@ -205,6 +207,9 @@
     @media(max-width:520px){
       .brand-mark{width:40px;height:40px;font-size:0.9rem}
       .visual-stage{height:180px}
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .mosaic-card:hover img { transform: scale(1.03); }
     }
   </style>
 </head>
@@ -218,11 +223,11 @@
 
   <main class="shell" id="main" role="main">
 
-    <!-- Top navigation (menu removed) -->
+    <!-- Top navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
       <a class="brand" href="#home" aria-label="MediaCraft home">
         <div class="brand-mark" aria-hidden="true">
-          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB">
+          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="">
         </div>
         <div>
           <div class="brand-name">MediaCraft</div>
@@ -242,20 +247,19 @@
         <div class="kicker">The Ultimate Resource</div>
         <h1 id="heroTitle" class="title">Your Digital Command Center For Creative Excellence.</h1>
 
-       <p class="lead">   At <strong>T.Ultimate Resource,</strong> we turn bold ideas into powerful realities.        </p>
- <p class="lead">  From sleek websites and standout brands to chart-ready music and marketing that moves people. </p>
+        <p class="lead"><strong>T.Ultimate Resource,</strong> we turn bold ideas into powerful realities.</p>
+        <p class="lead">From sleek websites and standout brands to chart-ready music and marketing that moves people.</p>
+        <p class="lead">We connect you with the talent to make it happen. <strong>Your next chapter starts here.</strong></p>
+        <p class="lead"><strong>Build | Brand | Engage.</strong></p>
 
-        <p class="lead">  We connect you with the talent to make it happen. <strong>Your next chapter starts here. Your vision, expertly crafted. </strong> </p>
- <p class="lead">   <strong>Build | Brand | Engage.</strong> </p>
-
-        <p class="lead">   ...   <span class="typewriter" aria-hidden="true"></span> </p>
+        <p class="lead"> <span class="typewriter" aria-hidden="true"></span> </p>
 
         <div class="section-head">
           <strong style="color:#fff">Core Services</strong>
           <small class="muted">Swipe or arrow through</small>
         </div>
 
-        <!-- Core services: mobile carousel, desktop grid (switches via CSS) -->
+        <!-- Services -->
         <div class="services" role="list" aria-label="Services carousel" aria-roledescription="carousel" tabindex="0">
           <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc1" data-index="0">
             <h4 id="svc1">Brand Strategy</h4>
@@ -280,17 +284,17 @@
       </div>
 
       <div class="visual-stage" aria-hidden="true">
-        <div class="layer" style="transform:translate3d(-8px,-8px,0) scale(1.00)">
+        <div class="layer" data-depth="0.6" style="transform:translate3d(-8px,-8px,0) scale(1.00)">
           <div class="card-visual">
             <h3>Studio Snapshot</h3>
             <p>Small teams, big ideas!</p>
           </div>
         </div>
 
-        <div class="layer" style="transform:translate3d(10px,10px,0) scale(1.05)">
+        <div class="layer" data-depth="1.0" style="transform:translate3d(10px,10px,0) scale(1.05)">
           <div class="card-visual visual-feature">
             <h3>Featured Project</h3>
-            <p>Increased brand lift/reach.</p>
+            <p>Increased brand lift & reach.</p>
           </div>
         </div>
       </div>
@@ -378,7 +382,7 @@
       </div>
     </section>
 
-    <!-- Our Services: improved grid (separate from hero carousel) -->
+    <!-- Our Services: improved grid -->
     <section id="ourServices" aria-labelledby="ourServicesTitle">
       <h3 id="ourServicesTitle" style="margin:0;color:#fff">Our Services</h3>
       <div class="services-grid" role="list" aria-label="Detailed services">
@@ -469,7 +473,7 @@
   </main>
 
   <!-- Accessible modal (Hire form) -->
-  <dialog id="hireModal" aria-labelledby="hireTitle">
+  <dialog id="hireModal" aria-labelledby="hireTitle" aria-hidden="true">
     <form method="dialog" style="padding:18px;min-width:320px;max-width:620px;display:flex;flex-direction:column;gap:10px">
       <h3 id="hireTitle">Quick Brief</h3>
       <label>
@@ -489,238 +493,369 @@
   </dialog>
 
   <script>
-    /* ======================================
-       Interactions + accessibility (clean)
-       ====================================== */
-
-    // Populate year
-    var yrEl = document.getElementById('yr');
-    if(yrEl) yrEl.textContent = new Date().getFullYear();
-
-    // ---- Page progress (top) ----
+    /* ============================
+       Utilities & small helpers
+       ============================ */
     (function(){
-      var progress = document.getElementById('progress');
-      function update(){
-        var scrolled = window.scrollY || window.pageYOffset;
-        var height = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = height ? (scrolled / height) : 0;
-        if(progress) progress.style.transform = 'scaleX(' + Math.min(Math.max(pct,0),1) + ')';
+      // Short helpers used below
+      window.$ = document.querySelector.bind(document);
+      window.$$ = document.querySelectorAll.bind(document);
+      function clamp(v, a, b){ return Math.min(Math.max(v,a),b); }
+
+      // Throttle: ensures callback runs at most once every wait ms (leading)
+      function throttle(fn, wait){
+        let last = 0;
+        return function(...args){
+          const now = Date.now();
+          if (now - last >= wait){ last = now; fn.apply(this, args); }
+        };
       }
-      window.addEventListener('scroll', update, {passive:true});
-      window.addEventListener('resize', update);
-      update();
-    })();
-
-    // ---- Custom cursor (cancellable on touch; better perf) ----
-    (function(){
-      var cursor = document.getElementById('cursor');
-      if(!cursor) return;
-      var x = window.innerWidth/2, y = window.innerHeight/2;
-      var tx = x, ty = y;
-      var rafId = null;
-
-      function loop(){
-        tx += (x - tx) * 0.18;
-        ty += (y - ty) * 0.18;
-        cursor.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) translate(-50%,-50%)';
-        rafId = requestAnimationFrame(loop);
+      // Debounce
+      function debounce(fn, wait){
+        let t = null;
+        return function(...args){
+          clearTimeout(t);
+          t = setTimeout(()=>fn.apply(this,args), wait);
+        };
       }
-      loop();
 
-      function onMouseMove(e){
-        x = e.clientX; y = e.clientY;
-        if(cursor.style.opacity === '0') cursor.style.opacity = '1';
-      }
-      document.addEventListener('mousemove', onMouseMove);
+      // Simple focusable selector for trap
+      const FOCUSABLE = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-      function disableCursorForTouch(){
-        cursor.style.opacity = '0';
-        if(rafId) cancelAnimationFrame(rafId);
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('touchstart', disableCursorForTouch);
-        document.body.classList.remove('no-cursor');
-      }
-      document.addEventListener('touchstart', disableCursorForTouch, {passive:true});
-    })();
+      /* ============================
+         DOM-ready initialisation
+         ============================ */
+      document.addEventListener('DOMContentLoaded', function(){
+        // Populate year
+        const yrEl = $('#yr');
+        if(yrEl) yrEl.textContent = new Date().getFullYear();
 
-    // ---- Typing microcopy in hero ----
-    (function(){
-      var words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
-      var el = document.querySelector('.typewriter');
-      if(!el) return;
-      var i = 0, j = 0, forward = true, timeout = null;
-      function tick(){
-        var w = words[i];
-        el.textContent = w.slice(0,j) + (j % 2 === 0 ? ' ' : '\u258F');
-        if(forward){
-          j++;
-          if(j > w.length){ forward = false; timeout = setTimeout(tick, 900); return; }
-        } else {
-          j--;
-          if(j === 0){ forward = true; i = (i+1) % words.length; }
-        }
-        timeout = setTimeout(tick, forward ? 90 : 30);
-      }
-      tick();
-      window.addEventListener('unload', function(){ if(timeout) clearTimeout(timeout); });
-    })();
+        // Cached selectors
+        const progress = $('#progress');
+        const cursor = $('#cursor');
+        const services = document.querySelector('.services');
+        const mosaicCards = $$('.mosaic-card');
+        const revealTargets = document.querySelectorAll('.mosaic-card, .tl-item');
+        const layers = document.querySelectorAll('.visual-stage .layer');
+        const hireBtn = $('#hireBtn');
+        const portfolioBtn = $('#portfolioBtn');
+        const modal = document.getElementById('hireModal');
+        const closeHire = $('#closeHire');
+        const microForm = $('#microContact');
+        const svcItems = Array.from(document.querySelectorAll('.svc'));
+        const typeEl = document.querySelector('.typewriter');
 
-    // ---- Dialog controls, focus management, portfolio scroll ----
-    (function(){
-      var modal = document.getElementById('hireModal');
-      var openBtn = document.getElementById('hireBtn');
-      var close = document.getElementById('closeHire');
-      var portfolioBtn = document.getElementById('portfolioBtn');
+        /* ---------------------------
+           Page progress (throttled)
+           --------------------------- */
+        const updateProgress = throttle(function(){
+          const scrolled = window.scrollY || window.pageYOffset;
+          const height = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = height ? (scrolled / height) : 0;
+          if(progress) progress.style.transform = 'scaleX(' + clamp(pct,0,1) + ')';
+        }, 50);
+        window.addEventListener('scroll', updateProgress, {passive:true});
+        window.addEventListener('resize', updateProgress);
+        updateProgress();
 
-      var lastFocusedEl = null;
+        /* ---------------------------
+           Custom cursor (rAF loop + touch-disable)
+           --------------------------- */
+        (function(){
+          if(!cursor) return;
+          let x = innerWidth/2, y = innerHeight/2;
+          let tx = x, ty = y;
+          let running = true;
+          let rafId = null;
 
-      // Open modal
-      if(openBtn){
-        openBtn.addEventListener('click', function(ev){
-          if(typeof modal.showModal === 'function'){
-            lastFocusedEl = document.activeElement;
-            modal.showModal();
-            var first = modal.querySelector('input,textarea,button');
-            if(first) first.focus();
-          } else {
-            location.href = 'mailto:hello@mediacraft.example';
+          function loop(){
+            tx += (x - tx) * 0.18;
+            ty += (y - ty) * 0.18;
+            cursor.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) translate(-50%,-50%)';
+            if(running) rafId = requestAnimationFrame(loop);
           }
-        });
-      }
 
-      // Close modal
-      if(close){
-        close.addEventListener('click', function(){ if(typeof modal.close === 'function') modal.close(); });
-      }
-      if(modal){
-        modal.addEventListener('close', function(){ if(lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus(); });
-        modal.addEventListener('cancel', function(){ modal.close(); });
-      }
+          function onMouseMove(e){
+            x = e.clientX; y = e.clientY;
+            if(cursor.style.opacity === '0') cursor.style.opacity = '1';
+          }
+          document.addEventListener('mousemove', onMouseMove, {passive:true});
 
-      // Portfolio button scroll
-      if(portfolioBtn){
-        portfolioBtn.addEventListener('click', function(e){
-          e.preventDefault();
-          var target = document.getElementById('works');
-          if(target){
+          function disableCursorForTouch(){
+            cursor.style.opacity = '0';
+            running = false;
+            if(rafId) cancelAnimationFrame(rafId);
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('touchstart', disableCursorForTouch);
+            document.body.classList.remove('no-cursor');
+          }
+          document.addEventListener('touchstart', disableCursorForTouch, {passive:true});
+          loop();
+        })();
+
+        /* ---------------------------
+           Typewriter (clean, respects reduced-motion)
+           --------------------------- */
+        (function(){
+          if(!typeEl) return;
+          if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+            typeEl.textContent = 'branding.';
+            return;
+          }
+          const words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
+          let wi = 0, ci = 0, forward = true, timer = null;
+
+          function tick(){
+            const w = words[wi];
+            typeEl.textContent = w.slice(0, ci) + (forward ? '\u258F' : ' ');
+            if(forward){
+              ci++;
+              if(ci > w.length){ forward = false; timer = setTimeout(tick, 800); return; }
+            } else {
+              ci--;
+              if(ci === 0){ forward = true; wi = (wi + 1) % words.length; }
+            }
+            timer = setTimeout(tick, forward ? 85 : 30);
+          }
+          tick();
+          window.addEventListener('unload', ()=>{ if(timer) clearTimeout(timer); });
+        })();
+
+        /* ---------------------------
+           Modal accessibility & focus trap
+           --------------------------- */
+        (function(){
+          let lastFocused = null;
+          function trapFocus(dialog){
+            const focusables = Array.from(dialog.querySelectorAll(FOCUSABLE));
+            if(!focusables.length) return;
+            const first = focusables[0], last = focusables[focusables.length -1];
+
+            function keyHandler(e){
+              if(e.key === 'Tab'){
+                if(e.shiftKey && document.activeElement === first){
+                  e.preventDefault();
+                  last.focus();
+                } else if(!e.shiftKey && document.activeElement === last){
+                  e.preventDefault();
+                  first.focus();
+                }
+              } else if(e.key === 'Escape'){
+                e.preventDefault();
+                closeDialog();
+              }
+            }
+            dialog.addEventListener('keydown', keyHandler);
+            dialog.__trapKeyHandler = keyHandler;
+          }
+          function untrapFocus(dialog){
+            if(dialog && dialog.__trapKeyHandler) dialog.removeEventListener('keydown', dialog.__trapKeyHandler);
+            dialog.__trapKeyHandler = null;
+          }
+
+          function openDialog(){
+            if(!modal) return;
+            lastFocused = document.activeElement;
+            if(typeof modal.showModal === 'function'){
+              try {
+                modal.showModal();
+                modal.setAttribute('aria-hidden','false');
+                // focus first input
+                const first = modal.querySelector('input, textarea, button');
+                if(first) first.focus();
+                trapFocus(modal);
+                document.documentElement.style.overflow = 'hidden'; // avoid background scroll on some browsers
+              } catch(e){
+                // fallback
+                location.href = 'mailto:hello@mediacraft.example';
+              }
+            } else {
+              // fallback for browsers without <dialog>
+              location.href = 'mailto:hello@mediacraft.example';
+            }
+          }
+
+          function closeDialog(){
+            if(!modal) return;
+            if(typeof modal.close === 'function'){
+              modal.close();
+              modal.setAttribute('aria-hidden','true');
+              untrapFocus(modal);
+              if(lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+            }
+            document.documentElement.style.overflow = '';
+          }
+
+          if(hireBtn) hireBtn.addEventListener('click', function(){
+            openDialog();
+          });
+
+          if(closeHire) closeHire.addEventListener('click', closeDialog);
+          if(modal){
+            modal.addEventListener('close', function(){ modal.setAttribute('aria-hidden','true'); untrapFocus(modal); if(lastFocused && lastFocused.focus) lastFocused.focus(); });
+            modal.addEventListener('cancel', function(e){ e.preventDefault(); closeDialog(); });
+          }
+        })();
+
+        /* ---------------------------
+           Portfolio button -> scroll and focus
+           --------------------------- */
+        (function(){
+          if(!portfolioBtn) return;
+          portfolioBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            const target = $('#works');
+            if(!target) return;
             target.setAttribute('tabindex','-1');
             target.scrollIntoView({behavior:'smooth',block:'start'});
-            setTimeout(function(){ target.focus(); target.removeAttribute('tabindex'); }, 500);
+            // Ensure focus after scroll finishes (debounced)
+            setTimeout(()=>{ try{ target.focus(); target.removeAttribute('tabindex'); }catch(e){} }, 520);
+          });
+        })();
+
+        /* ---------------------------
+           Mosaic parallax-ish hover (optimized)
+           --------------------------- */
+        (function(){
+          mosaicCards.forEach(function(card){
+            let raf = null;
+            const img = card.querySelector('img');
+            if(!img) return;
+            function onMove(e){
+              if(raf) cancelAnimationFrame(raf);
+              raf = requestAnimationFrame(function(){
+                const rect = card.getBoundingClientRect();
+                const cx = rect.left + rect.width/2;
+                const cy = rect.top + rect.height/2;
+                const dx = (e.clientX - cx) / rect.width;
+                const dy = (e.clientY - cy) / rect.height;
+                img.style.transform = `scale(1.03) translate(${dx * 8}px, ${dy * 8}px)`;
+              });
+            }
+            function onLeave(){
+              if(raf) cancelAnimationFrame(raf);
+              img.style.transform = '';
+            }
+            card.addEventListener('mousemove', onMove, {passive:true});
+            card.addEventListener('mouseleave', onLeave, {passive:true});
+            card.addEventListener('touchstart', onLeave, {passive:true});
+          });
+        })();
+
+        /* ---------------------------
+           Visual stage parallax on scroll (throttled)
+           --------------------------- */
+        (function(){
+          if(!layers || !layers.length) return;
+          const handler = throttle(function(){
+            const y = window.scrollY || window.pageYOffset;
+            layers.forEach(function(el, idx){
+              const depth = parseFloat(el.getAttribute('data-depth')) || (idx + 1) * 0.25;
+              // small bounded movement to avoid huge transforms
+              const tx = ((y * depth) % 40) - 20;
+              const ty = ((y * depth) % 28) - 14;
+              el.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+            });
+          }, 40);
+          window.addEventListener('scroll', handler, {passive:true});
+          handler();
+        })();
+
+        /* ---------------------------
+           IntersectionObserver reveal (efficient)
+           --------------------------- */
+        (function(){
+          const io = new IntersectionObserver(function(entries, obs){
+            entries.forEach(function(ent){
+              if(ent.isIntersecting){
+                ent.target.classList.remove('reveal-hidden');
+                ent.target.style.transform = 'translateY(0)';
+                ent.target.style.opacity = '1';
+                obs.unobserve(ent.target);
+              }
+            });
+          }, {threshold: 0.12, rootMargin: '0px 0px -8% 0px'});
+
+          revealTargets.forEach(function(el){
+            el.style.willChange = 'transform,opacity';
+            io.observe(el);
+          });
+        })();
+
+        /* ---------------------------
+           Services carousel keyboard nav & polite live region
+           --------------------------- */
+        (function(){
+          if(!services) return;
+          services.addEventListener('keydown', function(e){
+            if(e.key === 'ArrowRight'){ services.scrollBy({left:260,behavior:'smooth'}); }
+            if(e.key === 'ArrowLeft'){ services.scrollBy({left:-260,behavior:'smooth'}); }
+          });
+
+          services.setAttribute('tabindex','0');
+
+          // Live region
+          const live = document.createElement('div');
+          live.setAttribute('aria-live','polite');
+          live.className = 'sr-only';
+          document.body.appendChild(live);
+
+          function announceCurrent(){
+            let best = svcItems[0], bestDist = Infinity;
+            const center = window.innerWidth / 2;
+            svcItems.forEach(function(it){
+              const rect = it.getBoundingClientRect();
+              const cx = rect.left + rect.width/2;
+              const dist = Math.abs(cx - center);
+              if(dist < bestDist){ bestDist = dist; best = it; }
+            });
+            const title = best.querySelector('h4') ? best.querySelector('h4').textContent : 'Service';
+            live.textContent = 'Current service: ' + title;
           }
-        });
-      }
+
+          const onScroll = debounce(announceCurrent, 220);
+          services.addEventListener('scroll', onScroll, {passive:true});
+          // initial announce
+          announceCurrent();
+        })();
+
+        /* ---------------------------
+           Micro contact form handler (UX-only, promise-friendly)
+           --------------------------- */
+        (function(){
+          if(!microForm) return;
+          microForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            const btn = microForm.querySelector('button[type="submit"]');
+            if(!btn) return;
+            const orig = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            // Simulate network delay / provide success feedback
+            setTimeout(function(){
+              btn.textContent = 'Sent';
+              microForm.reset();
+              setTimeout(function(){ btn.textContent = orig; btn.disabled = false; }, 1200);
+            }, 800);
+          });
+        })();
+
+        /* ---------------------------
+           Accessibility small improvements
+           --------------------------- */
+        (function(){
+          // Ensure that images have alt (some already do) - best-effort placeholder
+          document.querySelectorAll('img').forEach(function(img){
+            if(!img.hasAttribute('alt')) img.setAttribute('alt','');
+            // lazy decoding preference
+            if(!img.getAttribute('decoding')) img.setAttribute('decoding','async');
+            if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
+          });
+        })();
+
+      }); // domcontentloaded end
+
     })();
-
-    // ---- Mosaic subtle parallax on mousemove (with transform reset) ----
-    (function(){
-      var items = document.querySelectorAll('.mosaic-card');
-      items.forEach(function(el){
-        el.addEventListener('mousemove', function(e){
-          var rect = el.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var cy = rect.top + rect.height/2;
-          var dx = (e.clientX - cx) / rect.width;
-          var dy = (e.clientY - cy) / rect.height;
-          var img = el.querySelector('img');
-          if(img) img.style.transform = 'scale(1.03) translate(' + (dx * 6) + 'px, ' + (dy * 6) + 'px)';
-        }, {passive:true});
-        el.addEventListener('mouseleave', function(){
-          var img = el.querySelector('img');
-          if(img) img.style.transform = '';
-        });
-      });
-    })();
-
-    // ---- Visual stage parallax on scroll ----
-    (function(){
-      var layers = document.querySelectorAll('.visual-stage .layer');
-      function onScroll(){
-        var y = window.scrollY || window.pageYOffset;
-        layers.forEach(function(el, idx){
-          var factor = (idx+1) * 0.02;
-          el.style.transform = 'translate3d(' + (((y*factor)%40) - 20) + 'px,' + (((y*factor)%28) - 14) + 'px,0)';
-        });
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
-
-    // ---- Reveal animations for timeline & mosaic (IntersectionObserver) ----
-    (function(){
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){
-            e.target.classList.remove('reveal-hidden');
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.opacity = '1';
-            io.unobserve(e.target);
-          }
-        });
-      }, {threshold:0.12});
-      document.querySelectorAll('.mosaic-card,.tl-item').forEach(function(el){
-        el.style.willChange = 'transform,opacity';
-        io.observe(el);
-      });
-    })();
-
-    // ---- Services carousel keyboard nav & accessible announce ----
-    (function(){
-      var track = document.querySelector('.services');
-      if(!track) return;
-      track.addEventListener('keydown', function(e){
-        if(e.key === 'ArrowRight') track.scrollBy({left:260,behavior:'smooth'});
-        if(e.key === 'ArrowLeft') track.scrollBy({left:-260,behavior:'smooth'});
-      });
-      track.setAttribute('tabindex','0');
-
-      // live region for screen readers
-      var live = document.createElement('div');
-      live.setAttribute('aria-live','polite');
-      live.className = 'sr-only';
-      document.body.appendChild(live);
-
-      var items = Array.from(track.querySelectorAll('.svc'));
-      function announceCurrent(){
-        var best = items[0], bestDist = Infinity;
-        var center = window.innerWidth / 2;
-        items.forEach(function(it){
-          var rect = it.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var dist = Math.abs(cx - center);
-          if(dist < bestDist){ bestDist = dist; best = it; }
-        });
-        var title = best.querySelector('h4') ? best.querySelector('h4').textContent : 'Service';
-        live.textContent = 'Current service: ' + title;
-      }
-
-      var t = null;
-      track.addEventListener('scroll', function(){
-        clearTimeout(t);
-        t = setTimeout(announceCurrent, 250);
-      }, {passive:true});
-      // initial
-      announceCurrent();
-    })();
-
-    // ---- Micro form submit handler (UX only) ----
-    (function(){
-      var form = document.getElementById('microContact');
-      if(!form) return;
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        var btn = form.querySelector('button');
-        var orig = btn.textContent;
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-        setTimeout(function(){
-          btn.textContent = 'Sent';
-          form.reset();
-          setTimeout(function(){ btn.textContent = orig; btn.disabled = false; }, 1200);
-        }, 800);
-      });
-    })();
-
-    // NOTE: small playful easter egg intentionally embedded (non-breaking).
   </script>
 </body>
 </html>
