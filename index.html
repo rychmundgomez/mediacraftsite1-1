@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Ultimate Resource</title>
+  <title>MediaCraft — The Ultimate Resource</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   <!-- Inline SVG favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23345b63'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Poppins,Arial' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
 
-  <meta name="description" content="The Ultimate Resource — crafted design, film, audio and product experiences. Reimagined single-page UI." />
+  <meta name="description" content="MediaCraft — crafted design, film, audio and product experiences. Reimagined single-page UI." />
 
   <style>
     /* ========================== 
@@ -28,6 +28,7 @@
       --gap: 18px;
       --ease: cubic-bezier(.2,.9,.25,1);
       --max-width: 1200px;
+      --text: 16px;
     }
 
     /* ==========================
@@ -44,6 +45,7 @@
       line-height:1.45;
       padding:16px;
       overflow-y:scroll;
+      font-size:var(--text);
     }
 
     /* Reduced motion support */
@@ -69,29 +71,29 @@
       gap:24px;
     }
 
-    /* Top navigation (menu removed) */
+    /* Top navigation */
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
       padding:10px;border-radius:12px;backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.03);
     }
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--primary)}
     .brand-mark{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#0af);color:#02111a;font-weight:900;font-size:1.05rem}
-    /* <-- tiny helper so the provided image fills the mark without changing the rest of your styles --> */
     .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;}
     .brand-name{font-weight:700;color:#fff}
     .brand-tag{font-family:'Playfair Display',serif;color:var(--muted);font-style:italic;font-size:0.85rem}
 
     .nav-actions{display:flex;gap:10px;align-items:center}
     .btn{
-      border:0;padding:10px 14px;border-radius:10px;background:var(--primary);color:#071027;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.4);
+      border:0;padding:10px 14px;border-radius:10px;background:var(--primary);color:#071027;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.28);
     }
     .ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
 
     /* Hero */
     .hero{
       display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:16px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);
+      position:relative;overflow:hidden;
     }
     .hero-grid{display:flex;flex-direction:column;gap:12px}
     .kicker{font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;font-size:0.78rem}
@@ -102,21 +104,21 @@
     .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block}
     .layer{
       position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform 700ms var(--ease);
+      will-change:transform;
     }
     .card-visual{width:86%;max-width:520px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));box-shadow:0 20px 60px rgba(0,0,0,0.6);color:#fff}
     .card-visual h3{margin:0 0 6px 0}
     .card-visual p{margin:0;color:var(--muted)}
 
-    /* Core services in hero (mobile carousel, desktop grid) */
+    /* Core services */
     .services{
       display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
       padding-top:6px;
     }
-    .svc{min-width:260px;flex:0 0 auto;background:linear-gradient(90deg,rgba(0,180,216,0.06),rgba(255,183,3,0.02));border-radius:12px;padding:14px;color:#fff;scroll-snap-align:center}
+    .svc{min-width:260px;flex:0 0 auto;background:linear-gradient(90deg,rgba(0,180,216,0.06),rgba(255,183,3,0.02));border-radius:12px;padding:14px;color:#fff;scroll-snap-align:center;outline:none}
     .svc h4{margin:0 0 8px 0}
     .svc p{margin:0;color:var(--muted)}
 
-    /* On wider screens, layout the hero services as a grid for better desktop viewing */
     @media (min-width:720px){
       .services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;overflow:visible}
     }
@@ -124,7 +126,7 @@
       .services{grid-template-columns:repeat(4,1fr)}
     }
 
-    /* Our Services (How we work) — responsive card grid */
+    /* Services grid */
     .services-grid{
       display:grid;
       gap:14px;
@@ -174,7 +176,6 @@
     .micro-form{display:flex;gap:8px}
     .micro-form input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff}
 
-    /* Micro-form small panel style (contained to footer) */
     .micro-form.small-panel{flex-direction:column;max-width:420px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:10px}
     .micro-form.small-panel input, .micro-form.small-panel button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
 
@@ -185,12 +186,11 @@
     /* Reveal initial state */
     .reveal-hidden { transform: translateY(12px); opacity: 0; transition: transform 600ms var(--ease), opacity 540ms var(--ease); }
 
-    /* Micro-UI: custom cursor + typing microcopy */
+    /* Micro-UI */
     .no-cursor{cursor:none}
     .cursor-dot{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:opacity 160ms}
     .typewriter{display:inline-block;color:var(--primary);font-weight:700}
 
-    /* Helpers */
     .muted{color:var(--muted)}
     .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
 
@@ -214,15 +214,15 @@
   <div id="cursor" class="cursor-dot" aria-hidden="true" style="background:radial-gradient(circle at 30% 30%, rgba(255,183,3,0.95), rgba(0,180,216,0.65));box-shadow:0 8px 30px rgba(0,0,0,0.6);"></div>
 
   <!-- Progress -->
-  <div id="progress" class="page-progress" aria-hidden="true"></div>
+  <div id="progress" class="page-progress" aria-hidden="true" role="presentation"></div>
 
   <main class="shell" id="main" role="main">
 
-    <!-- Top navigation (menu removed) -->
+    <!-- Top navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
       <a class="brand" href="#home" aria-label="MediaCraft home">
         <div class="brand-mark" aria-hidden="true">
-          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB">
+          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="MediaCraft mark">
         </div>
         <div>
           <div class="brand-name">MediaCraft</div>
@@ -231,8 +231,8 @@
       </a>
 
       <div class="nav-actions" role="group" aria-label="Primary actions">
-        <button class="btn" id="hireBtn">Hire a Creator</button>
-        <button class="btn ghost" id="portfolioBtn">Portfolio</button>
+        <button class="btn" id="hireBtn" type="button">Hire a Creator</button>
+        <button class="btn ghost" id="portfolioBtn" type="button">Portfolio</button>
       </div>
     </nav>
 
@@ -242,20 +242,20 @@
         <div class="kicker">The Ultimate Resource</div>
         <h1 id="heroTitle" class="title">Your Digital Command Center For Creative Excellence.</h1>
 
-       <p class="lead">   At <strong>T.Ultimate Resource,</strong> we turn bold ideas into powerful realities.        </p>
- <p class="lead">  From sleek websites and standout brands to chart-ready music and marketing that moves people. </p>
+        <p class="lead">
+          At MediaCraft we turn bold ideas into powerful realities — from sleek websites and standout brands to chart-ready music and marketing that moves people. We connect you with the talent to make it happen. Your vision, expertly crafted.
+        </p>
 
-        <p class="lead">  We connect you with the talent to make it happen. <strong>Your next chapter starts here. Your vision, expertly crafted. </strong> </p>
- <p class="lead">   <strong>Build | Brand | Engage.</strong> </p>
+        <p class="lead"><strong>Build | Brand | Engage.</strong></p>
 
-        <p class="lead">   ...   <span class="typewriter" aria-hidden="true"></span> </p>
+        <p class="lead">... <span class="typewriter" aria-hidden="true"></span></p>
 
         <div class="section-head">
           <strong style="color:#fff">Core Services</strong>
           <small class="muted">Swipe or arrow through</small>
         </div>
 
-        <!-- Core services: mobile carousel, desktop grid (switches via CSS) -->
+        <!-- Core services: carousel/grid -->
         <div class="services" role="list" aria-label="Services carousel" aria-roledescription="carousel" tabindex="0">
           <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc1" data-index="0">
             <h4 id="svc1">Brand Strategy</h4>
@@ -280,17 +280,17 @@
       </div>
 
       <div class="visual-stage" aria-hidden="true">
-        <div class="layer" style="transform:translate3d(-8px,-8px,0) scale(1.00)">
-          <div class="card-visual">
+        <div class="layer" data-base-transform="translate3d(-8px,-8px,0) scale(1.00)" style="transform:translate3d(-8px,-8px,0) scale(1.00);">
+          <div class="card-visual" aria-hidden="true">
             <h3>Studio Snapshot</h3>
             <p>Small teams, big ideas!</p>
           </div>
         </div>
 
-        <div class="layer" style="transform:translate3d(10px,10px,0) scale(1.05)">
-          <div class="card-visual visual-feature">
+        <div class="layer" data-base-transform="translate3d(10px,10px,0) scale(1.05)" style="transform:translate3d(10px,10px,0) scale(1.05);">
+          <div class="card-visual visual-feature" aria-hidden="true">
             <h3>Featured Project</h3>
-            <p>Increased brand lift/reach.</p>
+            <p>Increased brand lift and reach.</p>
           </div>
         </div>
       </div>
@@ -303,7 +303,7 @@
         <div class="muted">A rotation selection of projects</div>
       </div>
 
-      <div class="mosaic-wrap" role="list">
+      <div class="mosaic-wrap" role="list" aria-label="Selected projects">
         <!-- 1 -->
         <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m1">
           <img
@@ -378,7 +378,7 @@
       </div>
     </section>
 
-    <!-- Our Services: improved grid (separate from hero carousel) -->
+    <!-- Our Services -->
     <section id="ourServices" aria-labelledby="ourServicesTitle">
       <h3 id="ourServicesTitle" style="margin:0;color:#fff">Our Services</h3>
       <div class="services-grid" role="list" aria-label="Detailed services">
@@ -454,7 +454,7 @@
       </div>
 
       <div class="contact-row">
-        <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
+        <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form" novalidate>
           <input type="text" name="name" placeholder="Your name" aria-label="Your name" required />
           <input type="email" name="email" placeholder="Email" aria-label="Email address" required />
           <button class="btn" type="submit">Send</button>
@@ -489,238 +489,275 @@
   </dialog>
 
   <script>
-    /* ======================================
-       Interactions + accessibility (clean)
-       ====================================== */
+    'use strict';
+    (function () {
+      // Cache commonly used elements
+      const yrEl = document.getElementById('yr');
+      if (yrEl) yrEl.textContent = new Date().getFullYear();
 
-    // Populate year
-    var yrEl = document.getElementById('yr');
-    if(yrEl) yrEl.textContent = new Date().getFullYear();
-
-    // ---- Page progress (top) ----
-    (function(){
-      var progress = document.getElementById('progress');
-      function update(){
-        var scrolled = window.scrollY || window.pageYOffset;
-        var height = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = height ? (scrolled / height) : 0;
-        if(progress) progress.style.transform = 'scaleX(' + Math.min(Math.max(pct,0),1) + ')';
+      // Throttled page progress using requestAnimationFrame
+      const progress = document.getElementById('progress');
+      let rafProgress = null;
+      function updateProgress() {
+        if (!progress) return;
+        const scrolled = window.scrollY || window.pageYOffset;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = height ? Math.min(Math.max(scrolled / height, 0), 1) : 0;
+        progress.style.transform = 'scaleX(' + pct + ')';
+        rafProgress = null;
       }
-      window.addEventListener('scroll', update, {passive:true});
-      window.addEventListener('resize', update);
-      update();
-    })();
-
-    // ---- Custom cursor (cancellable on touch; better perf) ----
-    (function(){
-      var cursor = document.getElementById('cursor');
-      if(!cursor) return;
-      var x = window.innerWidth/2, y = window.innerHeight/2;
-      var tx = x, ty = y;
-      var rafId = null;
-
-      function loop(){
-        tx += (x - tx) * 0.18;
-        ty += (y - ty) * 0.18;
-        cursor.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) translate(-50%,-50%)';
-        rafId = requestAnimationFrame(loop);
+      function requestProgressUpdate() {
+        if (rafProgress == null) rafProgress = requestAnimationFrame(updateProgress);
       }
-      loop();
+      window.addEventListener('scroll', requestProgressUpdate, { passive: true });
+      window.addEventListener('resize', requestProgressUpdate);
+      requestProgressUpdate();
 
-      function onMouseMove(e){
-        x = e.clientX; y = e.clientY;
-        if(cursor.style.opacity === '0') cursor.style.opacity = '1';
-      }
-      document.addEventListener('mousemove', onMouseMove);
+      // Custom cursor: gracefully disable on touch devices and lower-powered devices
+      (function () {
+        const cursor = document.getElementById('cursor');
+        if (!cursor) return;
+        let x = window.innerWidth / 2, y = window.innerHeight / 2;
+        let tx = x, ty = y;
+        let rafId = null;
+        let enabled = true;
 
-      function disableCursorForTouch(){
-        cursor.style.opacity = '0';
-        if(rafId) cancelAnimationFrame(rafId);
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('touchstart', disableCursorForTouch);
-        document.body.classList.remove('no-cursor');
-      }
-      document.addEventListener('touchstart', disableCursorForTouch, {passive:true});
-    })();
-
-    // ---- Typing microcopy in hero ----
-    (function(){
-      var words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
-      var el = document.querySelector('.typewriter');
-      if(!el) return;
-      var i = 0, j = 0, forward = true, timeout = null;
-      function tick(){
-        var w = words[i];
-        el.textContent = w.slice(0,j) + (j % 2 === 0 ? ' ' : '\u258F');
-        if(forward){
-          j++;
-          if(j > w.length){ forward = false; timeout = setTimeout(tick, 900); return; }
-        } else {
-          j--;
-          if(j === 0){ forward = true; i = (i+1) % words.length; }
+        function loop() {
+          tx += (x - tx) * 0.18;
+          ty += (y - ty) * 0.18;
+          cursor.style.transform = `translate3d(${tx}px, ${ty}px, 0) translate(-50%, -50%)`;
+          rafId = requestAnimationFrame(loop);
         }
-        timeout = setTimeout(tick, forward ? 90 : 30);
-      }
-      tick();
-      window.addEventListener('unload', function(){ if(timeout) clearTimeout(timeout); });
-    })();
+        function onMouseMove(e) {
+          x = e.clientX; y = e.clientY;
+          if (cursor.style.opacity === '0') cursor.style.opacity = '1';
+        }
+        // Start loop only on pointer devices
+        const mq = window.matchMedia('(pointer:fine)');
+        if (mq.matches) {
+          loop();
+          document.addEventListener('mousemove', onMouseMove);
+        } else {
+          // hide cursor on touch-first devices
+          cursor.style.opacity = '0';
+          document.body.classList.remove('no-cursor');
+          enabled = false;
+        }
 
-    // ---- Dialog controls, focus management, portfolio scroll ----
-    (function(){
-      var modal = document.getElementById('hireModal');
-      var openBtn = document.getElementById('hireBtn');
-      var close = document.getElementById('closeHire');
-      var portfolioBtn = document.getElementById('portfolioBtn');
+        function disableCursorForTouch() {
+          if (!enabled) return;
+          cursor.style.opacity = '0';
+          if (rafId) cancelAnimationFrame(rafId);
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('touchstart', disableCursorForTouch);
+          document.body.classList.remove('no-cursor');
+          enabled = false;
+        }
+        document.addEventListener('touchstart', disableCursorForTouch, { passive: true });
+      })();
 
-      var lastFocusedEl = null;
-
-      // Open modal
-      if(openBtn){
-        openBtn.addEventListener('click', function(ev){
-          if(typeof modal.showModal === 'function'){
-            lastFocusedEl = document.activeElement;
-            modal.showModal();
-            var first = modal.querySelector('input,textarea,button');
-            if(first) first.focus();
+      // Simple typewriter microcopy
+      (function () {
+        const words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
+        const el = document.querySelector('.typewriter');
+        if (!el) return;
+        let i = 0, j = 0, forward = true, timeout = null;
+        function tick() {
+          const w = words[i];
+          el.textContent = w.slice(0, j) + (j % 2 === 0 ? ' ' : '\u258F');
+          if (forward) {
+            j++;
+            if (j > w.length) { forward = false; timeout = setTimeout(tick, 900); return; }
           } else {
-            location.href = 'mailto:hello@mediacraft.example';
+            j--;
+            if (j === 0) { forward = true; i = (i + 1) % words.length; }
           }
+          timeout = setTimeout(tick, forward ? 90 : 30);
+        }
+        tick();
+        window.addEventListener('pagehide', function () { if (timeout) clearTimeout(timeout); });
+      })();
+
+      // Dialog controls, focus management, portfolio scroll
+      (function () {
+        const modal = document.getElementById('hireModal');
+        const openBtn = document.getElementById('hireBtn');
+        const close = document.getElementById('closeHire');
+        const portfolioBtn = document.getElementById('portfolioBtn');
+        let lastFocusedEl = null;
+
+        if (openBtn) {
+          openBtn.addEventListener('click', function () {
+            if (typeof modal?.showModal === 'function') {
+              lastFocusedEl = document.activeElement;
+              modal.showModal();
+              const first = modal.querySelector('input,textarea,button');
+              if (first) first.focus();
+            } else {
+              // Graceful fallback on browsers without <dialog>
+              window.location.href = 'mailto:hello@mediacraft.example';
+            }
+          });
+        }
+        if (close) {
+          close.addEventListener('click', function () {
+            if (typeof modal?.close === 'function') modal.close();
+          });
+        }
+        if (modal) {
+          modal.addEventListener('close', function () {
+            if (lastFocusedEl?.focus) lastFocusedEl.focus();
+          });
+          modal.addEventListener('cancel', function (ev) {
+            // Ensure close on escape
+            if (typeof modal.close === 'function') modal.close();
+          });
+        }
+
+        // Portfolio button: smooth scroll then focus
+        if (portfolioBtn) {
+          portfolioBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.getElementById('works');
+            if (target) {
+              target.setAttribute('tabindex', '-1');
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              setTimeout(function () { target.focus(); target.removeAttribute('tabindex'); }, 600);
+            }
+          });
+        }
+      })();
+
+      // Mosaic subtle parallax on mousemove (using pointer events when available)
+      (function () {
+        const items = document.querySelectorAll('.mosaic-card');
+        if (!items.length) return;
+        items.forEach(el => {
+          let pointerMove = (e) => {
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) / rect.width;
+            const dy = (e.clientY - cy) / rect.height;
+            const img = el.querySelector('img');
+            if (img) img.style.transform = `scale(1.03) translate(${(dx * 6).toFixed(2)}px, ${(dy * 6).toFixed(2)}px)`;
+          };
+          el.addEventListener('pointermove', pointerMove, { passive: true });
+          el.addEventListener('pointerleave', function () {
+            const img = el.querySelector('img');
+            if (img) img.style.transform = '';
+          });
         });
-      }
+      })();
 
-      // Close modal
-      if(close){
-        close.addEventListener('click', function(){ if(typeof modal.close === 'function') modal.close(); });
-      }
-      if(modal){
-        modal.addEventListener('close', function(){ if(lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus(); });
-        modal.addEventListener('cancel', function(){ modal.close(); });
-      }
+      // Visual stage parallax (scroll-driven, rAF throttled)
+      (function () {
+        const layers = Array.from(document.querySelectorAll('.visual-stage .layer'));
+        if (!layers.length) return;
+        let rafId = null;
+        function onFrame() {
+          const y = window.scrollY || window.pageYOffset;
+          layers.forEach((el, idx) => {
+            const factor = (idx + 1) * 0.02;
+            // Using dataset base transform to avoid overriding scale defined in markup
+            const base = el.dataset.baseTransform || '';
+            const tx = (((y * factor) % 40) - 20).toFixed(2);
+            const ty = (((y * factor) % 28) - 14).toFixed(2);
+            // Compose transform with base if present
+            el.style.transform = `translate3d(${tx}px, ${ty}px, 0) ${base.replace('translate3d(', '').replace(')', '')}`.trim();
+          });
+          rafId = null;
+        }
+        function onScroll() {
+          if (rafId == null) rafId = requestAnimationFrame(onFrame);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        onScroll();
+      })();
 
-      // Portfolio button scroll
-      if(portfolioBtn){
-        portfolioBtn.addEventListener('click', function(e){
+      // Reveal animations for timeline & mosaic (IntersectionObserver)
+      (function () {
+        const revealEls = document.querySelectorAll('.mosaic-card, .tl-item');
+        if (!revealEls.length) return;
+        const io = new IntersectionObserver((entries, observer) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.remove('reveal-hidden');
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.opacity = '1';
+              observer.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => {
+          el.style.willChange = 'transform,opacity';
+          io.observe(el);
+        });
+      })();
+
+      // Services carousel keyboard nav & live region announce (a11y)
+      (function () {
+        const track = document.querySelector('.services');
+        if (!track) return;
+
+        track.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') track.scrollBy({ left: 260, behavior: 'smooth' });
+          if (e.key === 'ArrowLeft') track.scrollBy({ left: -260, behavior: 'smooth' });
+        });
+
+        // live region for screen readers
+        const live = document.createElement('div');
+        live.setAttribute('aria-live', 'polite');
+        live.className = 'sr-only';
+        document.body.appendChild(live);
+
+        const items = Array.from(track.querySelectorAll('.svc'));
+        function announceCurrent() {
+          let best = items[0], bestDist = Infinity;
+          const center = window.innerWidth / 2;
+          items.forEach(it => {
+            const rect = it.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const dist = Math.abs(cx - center);
+            if (dist < bestDist) { bestDist = dist; best = it; }
+          });
+          const title = best.querySelector('h4') ? best.querySelector('h4').textContent : 'Service';
+          live.textContent = 'Current service: ' + title;
+        }
+
+        let t = null;
+        track.addEventListener('scroll', function () {
+          clearTimeout(t);
+          t = setTimeout(announceCurrent, 250);
+        }, { passive: true });
+
+        // announce initial after paint
+        setTimeout(announceCurrent, 300);
+      })();
+
+      // Micro form submit handler (UX only, prevents double submit)
+      (function () {
+        const form = document.getElementById('microContact');
+        if (!form) return;
+        const btn = form.querySelector('button[type="submit"]');
+        form.addEventListener('submit', function (e) {
           e.preventDefault();
-          var target = document.getElementById('works');
-          if(target){
-            target.setAttribute('tabindex','-1');
-            target.scrollIntoView({behavior:'smooth',block:'start'});
-            setTimeout(function(){ target.focus(); target.removeAttribute('tabindex'); }, 500);
-          }
+          if (!btn) return;
+          const orig = btn.textContent;
+          btn.textContent = 'Sending...';
+          btn.disabled = true;
+          // Simulate network latency; replace with real fetch/post if needed
+          setTimeout(function () {
+            btn.textContent = 'Sent';
+            form.reset();
+            setTimeout(function () { btn.textContent = orig; btn.disabled = false; }, 1200);
+          }, 800);
         });
-      }
+      })();
+
+      // Small accessible fallback for keyboard users: ensure focus outlines are visible (already handled in CSS)
     })();
-
-    // ---- Mosaic subtle parallax on mousemove (with transform reset) ----
-    (function(){
-      var items = document.querySelectorAll('.mosaic-card');
-      items.forEach(function(el){
-        el.addEventListener('mousemove', function(e){
-          var rect = el.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var cy = rect.top + rect.height/2;
-          var dx = (e.clientX - cx) / rect.width;
-          var dy = (e.clientY - cy) / rect.height;
-          var img = el.querySelector('img');
-          if(img) img.style.transform = 'scale(1.03) translate(' + (dx * 6) + 'px, ' + (dy * 6) + 'px)';
-        }, {passive:true});
-        el.addEventListener('mouseleave', function(){
-          var img = el.querySelector('img');
-          if(img) img.style.transform = '';
-        });
-      });
-    })();
-
-    // ---- Visual stage parallax on scroll ----
-    (function(){
-      var layers = document.querySelectorAll('.visual-stage .layer');
-      function onScroll(){
-        var y = window.scrollY || window.pageYOffset;
-        layers.forEach(function(el, idx){
-          var factor = (idx+1) * 0.02;
-          el.style.transform = 'translate3d(' + (((y*factor)%40) - 20) + 'px,' + (((y*factor)%28) - 14) + 'px,0)';
-        });
-      }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
-    })();
-
-    // ---- Reveal animations for timeline & mosaic (IntersectionObserver) ----
-    (function(){
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){
-            e.target.classList.remove('reveal-hidden');
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.opacity = '1';
-            io.unobserve(e.target);
-          }
-        });
-      }, {threshold:0.12});
-      document.querySelectorAll('.mosaic-card,.tl-item').forEach(function(el){
-        el.style.willChange = 'transform,opacity';
-        io.observe(el);
-      });
-    })();
-
-    // ---- Services carousel keyboard nav & accessible announce ----
-    (function(){
-      var track = document.querySelector('.services');
-      if(!track) return;
-      track.addEventListener('keydown', function(e){
-        if(e.key === 'ArrowRight') track.scrollBy({left:260,behavior:'smooth'});
-        if(e.key === 'ArrowLeft') track.scrollBy({left:-260,behavior:'smooth'});
-      });
-      track.setAttribute('tabindex','0');
-
-      // live region for screen readers
-      var live = document.createElement('div');
-      live.setAttribute('aria-live','polite');
-      live.className = 'sr-only';
-      document.body.appendChild(live);
-
-      var items = Array.from(track.querySelectorAll('.svc'));
-      function announceCurrent(){
-        var best = items[0], bestDist = Infinity;
-        var center = window.innerWidth / 2;
-        items.forEach(function(it){
-          var rect = it.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var dist = Math.abs(cx - center);
-          if(dist < bestDist){ bestDist = dist; best = it; }
-        });
-        var title = best.querySelector('h4') ? best.querySelector('h4').textContent : 'Service';
-        live.textContent = 'Current service: ' + title;
-      }
-
-      var t = null;
-      track.addEventListener('scroll', function(){
-        clearTimeout(t);
-        t = setTimeout(announceCurrent, 250);
-      }, {passive:true});
-      // initial
-      announceCurrent();
-    })();
-
-    // ---- Micro form submit handler (UX only) ----
-    (function(){
-      var form = document.getElementById('microContact');
-      if(!form) return;
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        var btn = form.querySelector('button');
-        var orig = btn.textContent;
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
-        setTimeout(function(){
-          btn.textContent = 'Sent';
-          form.reset();
-          setTimeout(function(){ btn.textContent = orig; btn.disabled = false; }, 1200);
-        }, 800);
-      });
-    })();
-
-    // NOTE: small playful easter egg intentionally embedded (non-breaking).
   </script>
 </body>
 </html>
