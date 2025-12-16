@@ -1,34 +1,51 @@
-# MediaCraft — build & asset pipeline
+# MediaCraft — The Ultimate Resource
 
-This repository contains the single-file HTML for the MediaCraft landing page with sources split into CSS and JS and a small build script.
+A modern, accessible, and performance-focused **single-page creative agency website** built with **pure HTML, CSS, and vanilla JavaScript**.  
+MediaCraft acts as a digital command center for branding, design, audio, video, and development services — all delivered in a refined, motion-aware UI.
 
-Files of interest
-- index.html — uses compiled assets at `dist/styles.min.css` and `dist/script.min.js`.
-- src/styles.css — original CSS source (minified to dist during build).
-- src/script.js — original JS source (bundled + minified by esbuild to dist).
-- build.js — Node build script (uses esbuild and csso).
-- package.json — scripts and devDependencies.
+---
 
-Quick start
-1. Install dependencies:
-   npm install
+## ✨ Features
 
-2. Build once:
-   npm run build
+- **Fully responsive, mobile-first design**
+- **Zero frameworks** — pure HTML + CSS + JS
+- **Accessible by default**
+  - ARIA roles & labels
+  - Keyboard navigation
+  - Reduced-motion support
+- **Modern UI patterns**
+  - Custom cursor (auto-disabled on touch)
+  - Typing micro-copy animation
+  - Scroll-based page progress indicator
+  - IntersectionObserver reveal animations
+  - CSS column masonry layout
+- **Performance-optimized**
+  - Lazy-loaded images
+  - Minimal JS
+  - No external JS dependencies
+- **Clean UX**
+  - Keyboard-navigable carousel
+  - Accessible modal dialog
+  - Smooth scrolling & focus management
 
-   This creates `dist/styles.min.css` and `dist/script.min.js`. Open `index.html` in a browser (or serve the folder).
+---
 
-3. Development (watch):
-   npm run watch
+## 🧱 Tech Stack
 
-   This watches JS and CSS and rebuilds on change.
+| Layer | Technology |
+|-----|-----------|
+| Markup | HTML5 |
+| Styling | CSS3 (custom properties, grid, flexbox, columns) |
+| Scripting | Vanilla JavaScript (ES6+) |
+| Fonts | Google Fonts (Playfair Display, Poppins) |
+| Assets | Responsive images with `srcset` |
+| Accessibility | ARIA, focus trapping, reduced motion |
 
-4. Serve locally for quick testing:
-   npx serve .
+---
 
-Notes
-- The build script is intentionally small and dependency-light:
-  - esbuild for JS bundling/minification (fast).
-  - csso for CSS minification.
+## 📂 Project Structure
 
-- You can replace csso with PostCSS + cssnano or extend esbuild plugins if you want source maps, critical CSS extraction, or more advanced processing.
+```txt
+/
+├── index.html        # Entire application (HTML, CSS & JS)
+├── README.md         # Project documentation
