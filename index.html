@@ -106,6 +106,7 @@
     .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block;flex:1;min-width:200px}
     .layer{
       position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform 700ms var(--ease);
+      will-change:transform;
     }
     .card-visual{width:86%;max-width:520px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));box-shadow:0 20px 60px rgba(0,0,0,0.6);color:#fff}
     .card-visual h3{margin:0 0 6px 0}
@@ -502,9 +503,12 @@
 
   <script>
     /* ======================================
-       Interactions + accessibility (clean)
-       - Easter-egg / non-essential playful custom cursor removed.
-       - Small bugfixes and responsive improvements.
+       Interactions + accessibility (parallax improved)
+       - Responsive parallax for .visual-stage layers:
+         * Works on scroll (element vs viewport center)
+         * Works with pointermove (mouse/touch) when interacting
+         * Reduced magnitude on small screens
+         * Smooth lerp via rAF for performance
        ====================================== */
 
     // Populate year
@@ -613,18 +617,116 @@
       });
     })();
 
-    // ---- Visual stage parallax on scroll ----
+    // ---- Improved visual-stage parallax (responsive) ----
     (function(){
-      var layers = document.querySelectorAll('.visual-stage .layer');
-      function onScroll(){
-        var y = window.scrollY || window.pageYOffset;
-        layers.forEach(function(el, idx){
-          var factor = (idx+1) * 0.02;
-          el.style.transform = 'translate3d(' + (((y*factor)%40) - 20) + 'px,' + (((y*factor)%28) - 14) + 'px,0)';
+      var visual = document.querySelector('.visual-stage');
+      if(!visual) return;
+      var layers = Array.from(visual.querySelectorAll('.layer'));
+      var pointer = {x:0,y:0,active:false}; // normalized -1..1
+      var needsUpdate = false;
+      var rafId = null;
+
+      // state used for smooth lerp
+      layers.forEach(function(l){ l._tx = 0; l._ty = 0; l._cx = 0; l._cy = 0; });
+
+      function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+      function computeTargets(){
+        var rect = visual.getBoundingClientRect();
+        var vx = window.innerWidth / 2;
+        var vy = window.innerHeight / 2;
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+
+        // normalized offsets of visual-stage center relative to viewport center (-1..1)
+        var normX = clamp((cx - vx) / vx, -1, 1);
+        var normY = clamp((cy - vy) / vy, -1, 1);
+
+        // combine with pointer when active (pointer has same range -1..1)
+        var pX = pointer.active ? pointer.x : 0;
+        var pY = pointer.active ? pointer.y : 0;
+
+        // set target transforms per layer depending on depth and screen size
+        var isSmall = window.innerWidth < 720;
+        var baseMaxX = isSmall ? 8 : 20; // px max per depth 1
+        var baseMaxY = isSmall ? 6 : 14;
+
+        layers.forEach(function(l, idx){
+          var depth = (idx + 1) / layers.length; // 0..1
+          var tx = ( -normX * baseMaxX * depth ) + ( -pX * baseMaxX * depth );
+          var ty = ( -normY * baseMaxY * depth ) + ( -pY * baseMaxY * depth );
+          // small gentle scale variation for depth (optional)
+          l._tx = tx;
+          l._ty = ty;
+          l._scale = 1 + (0.01 * depth);
         });
+
+        needsUpdate = true;
+        startLoop();
       }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
+
+      function startLoop(){
+        if(rafId) return;
+        function loop(){
+          var still = true;
+          layers.forEach(function(l){
+            // lerp current transform toward target
+            var cur = l._cx || 0;
+            var t = l._tx || 0;
+            var curY = l._cy || 0;
+            var tY = l._ty || 0;
+
+            // interpolation factor (fast but smooth)
+            var ease = 0.16;
+            var nx = cur + (t - cur) * ease;
+            var ny = curY + (tY - curY) * ease;
+
+            l._cx = nx;
+            l._cy = ny;
+
+            // apply transform
+            var s = l._scale || 1;
+            l.style.transform = 'translate3d(' + nx.toFixed(2) + 'px,' + ny.toFixed(2) + 'px,0) scale(' + s.toFixed(3) + ')';
+
+            if(Math.abs(t - nx) > 0.05 || Math.abs(tY - ny) > 0.05) still = false;
+          });
+
+          if(!still){
+            rafId = requestAnimationFrame(loop);
+          } else {
+            rafId = null;
+            needsUpdate = false;
+          }
+        }
+        rafId = requestAnimationFrame(loop);
+      }
+
+      // pointer (mouse & touch) handling using pointer events
+      function onPointerMove(ev){
+        // only respond while interacting over the visual area
+        var rect = visual.getBoundingClientRect();
+        var px = (ev.clientX - (rect.left + rect.width/2)) / (rect.width/2);
+        var py = (ev.clientY - (rect.top + rect.height/2)) / (rect.height/2);
+        pointer.x = clamp(px, -1, 1);
+        pointer.y = clamp(py, -1, 1);
+        pointer.active = true;
+        computeTargets();
+      }
+      function onPointerLeave(){
+        pointer.active = false;
+        // recompute targets so movement from scroll/center takes effect again
+        computeTargets();
+      }
+
+      // update on scroll / resize and initial compute
+      window.addEventListener('scroll', computeTargets, {passive:true});
+      window.addEventListener('resize', computeTargets);
+      visual.addEventListener('pointermove', onPointerMove, {passive:true});
+      visual.addEventListener('pointerleave', onPointerLeave);
+      visual.addEventListener('pointercancel', onPointerLeave);
+
+      // initial
+      computeTargets();
     })();
 
     // ---- Reveal animations for timeline & mosaic (IntersectionObserver) ----
