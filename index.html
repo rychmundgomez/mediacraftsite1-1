@@ -43,7 +43,7 @@
       -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
       line-height:1.45;
       padding:16px;
-      overflow-y:scroll;
+      overflow-y:overlay;
     }
 
     /* Reduced motion support */
@@ -90,16 +90,20 @@
 
     /* Hero */
     .hero{
-      display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:16px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding:18px;border-radius:16px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);
+      align-items:flex-start;
     }
-    .hero-grid{display:flex;flex-direction:column;gap:12px}
+    .hero-grid{display:flex;flex-direction:column;gap:12px;flex:1}
     .kicker{font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;font-size:0.78rem}
     h1.title{margin:0;font-family:'Playfair Display',serif;color:#fff;font-weight:700;font-size:clamp(1.35rem,3vw,2.4rem);line-height:1.05}
     p.lead{margin:0;color:var(--muted);max-width:60ch}
 
     /* Visual stage */
-    .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block}
+    .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block;flex:1;min-width:200px}
     .layer{
       position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform 700ms var(--ease);
     }
@@ -185,9 +189,6 @@
     /* Reveal initial state */
     .reveal-hidden { transform: translateY(12px); opacity: 0; transition: transform 600ms var(--ease), opacity 540ms var(--ease); }
 
-    /* Micro-UI: custom cursor + typing microcopy */
-    .no-cursor{cursor:none}
-    .cursor-dot{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:opacity 160ms}
     .typewriter{display:inline-block;color:var(--primary);font-weight:700}
 
     /* Helpers */
@@ -205,13 +206,25 @@
     @media(max-width:520px){
       .brand-mark{width:40px;height:40px;font-size:0.9rem}
       .visual-stage{height:180px}
+      .card-visual{width:92%}
+    }
+
+    /* Desktop layout improvements */
+    @media(min-width:920px){
+      .hero{
+        flex-direction:row;
+        align-items:stretch;
+        gap:24px;
+        padding:22px;
+      }
+      .hero-grid{flex:0 0 52%}
+      .visual-stage{flex:0 0 48%;height:320px;display:flex;align-items:center;justify-content:center}
+      .card-visual{width:92%;max-width:none}
+      .section-head{gap:18px}
     }
   </style>
 </head>
-<body class="no-cursor" aria-label="MediaCraft reimagined single page">
-
-  <!-- Custom cursor -->
-  <div id="cursor" class="cursor-dot" aria-hidden="true" style="background:radial-gradient(circle at 30% 30%, rgba(255,183,3,0.95), rgba(0,180,216,0.65));box-shadow:0 8px 30px rgba(0,0,0,0.6);"></div>
+<body aria-label="MediaCraft reimagined single page">
 
   <!-- Progress -->
   <div id="progress" class="page-progress" aria-hidden="true"></div>
@@ -242,13 +255,12 @@
         <div class="kicker">The Ultimate Resource</div>
         <h1 id="heroTitle" class="title">Your Digital Command Center For Creative Excellence.</h1>
 
-       <p class="lead">   At <strong>T.Ultimate Resource,</strong> we turn bold ideas into powerful realities.        </p>
- <p class="lead">  From sleek websites and standout brands to chart-ready music and marketing that moves people. </p>
+        <p class="lead"><strong>At The Ultimate Resource,</strong> we turn bold ideas into powerful realities.</p>
+        <p class="lead">From sleek websites and standout brands to chart-ready music and marketing that moves people.</p>
+        <p class="lead">We connect you with the talent to make it happen. <strong>Your next chapter starts here. Your vision, expertly crafted.</strong></p>
+        <p class="lead"><strong>Build | Brand | Engage.</strong></p>
 
-        <p class="lead">  We connect you with the talent to make it happen. <strong>Your next chapter starts here. Your vision, expertly crafted. </strong> </p>
- <p class="lead">   <strong>Build | Brand | Engage.</strong> </p>
-
-        <p class="lead">   ...   <span class="typewriter" aria-hidden="true"></span> </p>
+        <p class="lead"><span class="typewriter" aria-hidden="true"></span></p>
 
         <div class="section-head">
           <strong style="color:#fff">Core Services</strong>
@@ -491,6 +503,8 @@
   <script>
     /* ======================================
        Interactions + accessibility (clean)
+       - Easter-egg / non-essential playful custom cursor removed.
+       - Small bugfixes and responsive improvements.
        ====================================== */
 
     // Populate year
@@ -509,38 +523,6 @@
       window.addEventListener('scroll', update, {passive:true});
       window.addEventListener('resize', update);
       update();
-    })();
-
-    // ---- Custom cursor (cancellable on touch; better perf) ----
-    (function(){
-      var cursor = document.getElementById('cursor');
-      if(!cursor) return;
-      var x = window.innerWidth/2, y = window.innerHeight/2;
-      var tx = x, ty = y;
-      var rafId = null;
-
-      function loop(){
-        tx += (x - tx) * 0.18;
-        ty += (y - ty) * 0.18;
-        cursor.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) translate(-50%,-50%)';
-        rafId = requestAnimationFrame(loop);
-      }
-      loop();
-
-      function onMouseMove(e){
-        x = e.clientX; y = e.clientY;
-        if(cursor.style.opacity === '0') cursor.style.opacity = '1';
-      }
-      document.addEventListener('mousemove', onMouseMove);
-
-      function disableCursorForTouch(){
-        cursor.style.opacity = '0';
-        if(rafId) cancelAnimationFrame(rafId);
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('touchstart', disableCursorForTouch);
-        document.body.classList.remove('no-cursor');
-      }
-      document.addEventListener('touchstart', disableCursorForTouch, {passive:true});
     })();
 
     // ---- Typing microcopy in hero ----
@@ -562,7 +544,7 @@
         timeout = setTimeout(tick, forward ? 90 : 30);
       }
       tick();
-      window.addEventListener('unload', function(){ if(timeout) clearTimeout(timeout); });
+      window.addEventListener('beforeunload', function(){ if(timeout) clearTimeout(timeout); });
     })();
 
     // ---- Dialog controls, focus management, portfolio scroll ----
@@ -682,7 +664,8 @@
       var items = Array.from(track.querySelectorAll('.svc'));
       function announceCurrent(){
         var best = items[0], bestDist = Infinity;
-        var center = window.innerWidth / 2;
+        var rectTrack = track.getBoundingClientRect();
+        var center = rectTrack.left + rectTrack.width / 2;
         items.forEach(function(it){
           var rect = it.getBoundingClientRect();
           var cx = rect.left + rect.width/2;
@@ -719,8 +702,6 @@
         }, 800);
       });
     })();
-
-    // NOTE: small playful easter egg intentionally embedded (non-breaking).
   </script>
 </body>
 </html>
