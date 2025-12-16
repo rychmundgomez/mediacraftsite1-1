@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>The Ultimate Resource</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
+  <!-- Inline SVG favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23345b63'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Poppins,Arial' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
 
   <meta name="description" content="The Ultimate Resource — crafted design, film, audio and product experiences." />
@@ -25,46 +27,70 @@
     }
 
     *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+
     body{
       margin:0;
       font-family:'Poppins',system-ui;
       color:var(--muted);
       background:linear-gradient(180deg,var(--bg-1),var(--bg-2));
       padding:16px;
+      overflow-y:scroll;
     }
 
-    .shell{max-width:var(--max-width);margin:0 auto;display:flex;flex-direction:column;gap:24px}
+    .shell{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
 
     .btn{
+      border:0;
       padding:10px 14px;
       border-radius:10px;
-      border:0;
       background:var(--primary);
       font-weight:700;
       cursor:pointer;
     }
 
-    .ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.1)}
+    .ghost{
+      background:transparent;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.08);
+    }
 
     .micro-form{
       display:flex;
-      flex-direction:column;
       gap:8px;
-      max-width:420px;
-      padding:12px;
-      background:rgba(255,255,255,.03);
-      border-radius:12px;
     }
 
     .micro-form input{
+      flex:1;
       padding:10px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,.1);
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.08);
       background:transparent;
       color:#fff;
     }
 
-    footer{margin-top:40px}
+    .micro-form.small-panel{
+      flex-direction:column;
+      max-width:420px;
+      padding:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.02));
+      border-radius:12px;
+    }
+
+    footer.sitefoot{
+      padding:16px;
+      border-radius:12px;
+      background:linear-gradient(180deg,rgba(255,255,255,.01),transparent);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
   </style>
 </head>
 
@@ -73,13 +99,14 @@
 <main class="shell">
 
   <h1 style="color:#fff">MediaCraft</h1>
-  <p>The Ultimate Resource for Creative Excellence.</p>
+  <p>The Ultimate Resource — Creative Excellence.</p>
 
-  <!-- CONTACT FORM -->
-  <footer>
-    <h3 style="color:#fff">Quick Contact</h3>
+  <!-- CONTACT FOOTER -->
+  <footer class="sitefoot" role="contentinfo">
+    <h3 style="color:#fff">Ready to begin?</h3>
+    <p class="muted">Tell us about your project and we'll reply within one business day.</p>
 
-    <form id="microContact" class="micro-form" aria-label="Quick contact form">
+    <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
       <input type="text" name="name" placeholder="Your name" required />
       <input type="email" name="email" placeholder="Email address" required />
       <button class="btn" type="submit">Send</button>
@@ -97,7 +124,7 @@
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 /* ===========================
-   REAL FORM SUBMISSION
+   REAL FORM SUBMISSION (UPDATED)
    =========================== */
 (function(){
   const form = document.getElementById('microContact');
@@ -119,26 +146,26 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 
     try{
       const res = await fetch('/api/contact', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(payload)
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(payload)
       });
 
-      if(!res.ok) throw new Error('Failed');
+      if(!res.ok) throw new Error('Submission failed');
 
       btn.textContent = 'Sent ✔️';
       form.reset();
     }
     catch(err){
       console.error(err);
-      alert('Submission failed. Please try again.');
+      alert('Something went wrong. Please try again.');
       btn.textContent = 'Error ❗';
     }
     finally{
       setTimeout(()=>{
         btn.textContent = original;
         btn.disabled = false;
-      },2000);
+      }, 2000);
     }
   });
 })();
