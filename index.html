@@ -702,46 +702,46 @@
       announceCurrent();
     })();
 
-  // ---- Micro form submit handler (REAL) ----
+  // ---- Micro form submit handler (WhatsApp) ----
 (function(){
   var form = document.getElementById('microContact');
   if(!form) return;
 
-  form.addEventListener('submit', async function(e){
+  // CHANGE THIS TO YOUR WHATSAPP NUMBER (NO +, NO SPACES)
+  var WHATSAPP_NUMBER = '233540281796';
+
+  form.addEventListener('submit', function(e){
     e.preventDefault();
 
-    var btn = form.querySelector('button');
-    var originalText = btn.textContent;
+    var name = form.name.value.trim();
+    var email = form.email.value.trim();
 
-    btn.textContent = 'Sending...';
+    if(!name || !email){
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    var message =
+      'Hello MediaCraft 👋%0A%0A' +
+      '*Name:* ' + encodeURIComponent(name) + '%0A' +
+      '*Email:* ' + encodeURIComponent(email) + '%0A%0A' +
+      'I would like to discuss a project.';
+
+    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+
+    // UX feedback
+    var btn = form.querySelector('button');
+    var original = btn.textContent;
+    btn.textContent = 'Opening WhatsApp...';
     btn.disabled = true;
 
-    var payload = {
-      name: form.name.value.trim(),
-      email: form.email.value.trim()
-    };
+    window.open(url, '_blank', 'noopener');
 
-    try {
-      var res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) throw new Error('Request failed');
-
-      btn.textContent = 'Sent ✔️';
+    setTimeout(function(){
+      btn.textContent = original;
+      btn.disabled = false;
       form.reset();
-    } catch (err) {
-      console.error(err);
-      btn.textContent = 'Error ❗';
-      alert('Something went wrong. Please try again.');
-    } finally {
-      setTimeout(function(){
-        btn.textContent = originalText;
-        btn.disabled = false;
-      }, 2000);
-    }
+    }, 1200);
   });
 })();
 
