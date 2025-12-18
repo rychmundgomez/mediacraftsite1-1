@@ -455,8 +455,9 @@
 
       <div class="contact-row">
         <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
-          <input type="text" name="name" placeholder="Your name" aria-label="Your name" required />
-          <input type="email" name="email" placeholder="Email" aria-label="Email address" required />
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="project" placeholder="Project description" rows="3" required></textarea>
           <button class="btn" type="submit">Send</button>
         </form>
       </div>
@@ -702,7 +703,7 @@
       announceCurrent();
     })();
 
-    // ---- Micro form submit handler (WhatsApp + date/time + project) ----
+    // ---- Micro form submit handler (WhatsApp – mobile guaranteed) ----
 (function(){
   var form = document.getElementById('microContact');
   if(!form) return;
@@ -723,7 +724,7 @@
 
     var now = new Date();
     var date = now.toLocaleDateString();
-    var time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    var time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     var message =
       'Hello MediaCraft 👋\n\n' +
@@ -731,17 +732,25 @@
       'Email: ' + email + '\n' +
       'Date: ' + date + '\n' +
       'Time: ' + time + '\n\n' +
-      'Project Description:\n' + project;
+      'Project Description:\n' +
+      project;
 
-    var encodedMessage = encodeURIComponent(message);
+    var encoded = encodeURIComponent(message);
 
-    var url =
-      'https://wa.me/' +
-      WHATSAPP_NUMBER +
-      '?text=' +
-      encodedMessage;
+    // 1️⃣ Try opening WhatsApp app directly (BEST for mobile)
+    var appUrl = 'whatsapp://send?phone=' + WHATSAPP_NUMBER + '&text=' + encoded;
 
-    window.open(url, '_blank'); // ✅ mobile-safe
+    // 2️⃣ Fallback to web WhatsApp
+    var webUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encoded;
+
+    // Must be triggered directly by user action
+    window.location.href = appUrl;
+
+    // Fallback after short delay
+    setTimeout(function(){
+      window.location.href = webUrl;
+    }, 500);
+
     form.reset();
   });
 })();
