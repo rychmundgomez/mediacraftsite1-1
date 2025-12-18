@@ -448,8 +448,10 @@
         </div>
 
         <div style="display:flex;gap:8px;align-items:center">
+          <a class="btn" href="https://wa.me/233540281796" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
           <a class="btn ghost" href="mailto:gomezrychmund244@gmail.com">Email Us</a>
         </div>
+      </div>
 
       <div class="contact-row">
         <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
@@ -543,7 +545,7 @@
 
     // ---- Typing microcopy in hero ----
     (function(){
-      var words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'developing.'];
+      var words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
       var el = document.querySelector('.typewriter');
       if(!el) return;
       var i = 0, j = 0, forward = true, timeout = null;
@@ -700,70 +702,23 @@
       announceCurrent();
     })();
 
- // ---- Micro form submit handler (WhatsApp + date/time + project) ----
-(function(){
-  var form = document.getElementById('microContact');
-  if(!form) return;
-
-  // WhatsApp number: country code + number (NO +, NO spaces)
-  var WHATSAPP_NUMBER = '233540281796';
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    var name = form.name.value.trim();
-    var email = form.email.value.trim();
-    var project = form.project.value.trim();
-
-    if(!name || !email || !project){
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    // Auto date & time (user’s local timezone)
-    var now = new Date();
-    var date = now.toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    var time = now.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-
-    // Plain-text message (encoded once)
-    var message =
-      'Hello T.Ultimate Resource 👋\n\n' +
-      'Name: ' + name + '\n' +
-      'Email: ' + email + '\n' +
-      'Date: ' + date + '\n' +
-      'Time: ' + time + '\n\n' +
-      'Project Description:\n' + project;
-
-    var encodedMessage = encodeURIComponent(message);
-
-    var url =
-      'https://wa.me/?phone=' +
-      WHATSAPP_NUMBER +
-      '&text=' +
-      encodedMessage;
-
-    var btn = form.querySelector('button');
-    var original = btn.textContent;
-    btn.textContent = 'Opening WhatsApp...';
-    btn.disabled = true;
-
-    // Mobile-safe navigation
-    window.location.href = url;
-
-    setTimeout(function(){
-      btn.textContent = original;
-      btn.disabled = false;
-      form.reset();
-    }, 1200);
-  });
-})();
+    // ---- Micro form submit handler (UX only) ----
+    (function(){
+      var form = document.getElementById('microContact');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var btn = form.querySelector('button');
+        var orig = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        setTimeout(function(){
+          btn.textContent = 'Sent';
+          form.reset();
+          setTimeout(function(){ btn.textContent = orig; btn.disabled = false; }, 1200);
+        }, 800);
+      });
+    })();
 
     // NOTE: small playful easter egg intentionally embedded (non-breaking).
   </script>
