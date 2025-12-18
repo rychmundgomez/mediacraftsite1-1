@@ -746,10 +746,10 @@
     var encodedMessage = encodeURIComponent(message);
 
     var url =
-      'https://wa.me/?phone=' +
-      WHATSAPP_NUMBER +
-      '&text=' +
-      encodedMessage;
+  'https://wa.me/' +
+  WHATSAPP_NUMBER +
+  '?text=' +
+  encodedMessage;
 
     var btn = form.querySelector('button');
     var original = btn.textContent;
