@@ -707,8 +707,7 @@
   var form = document.getElementById('microContact');
   if(!form) return;
 
-  // WhatsApp number: country code + number (NO +, NO spaces)
-  var WHATSAPP_NUMBER = '233540281796';
+  var WHATSAPP_NUMBER = '233540281796'; // no +, no spaces
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -722,19 +721,10 @@
       return;
     }
 
-    // Auto date & time (user’s local timezone)
     var now = new Date();
-    var date = now.toLocaleDateString(undefined, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    var time = now.toLocaleTimeString(undefined, {
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    var date = now.toLocaleDateString();
+    var time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 
-    // Plain-text message (encoded once)
     var message =
       'Hello MediaCraft 👋\n\n' +
       'Name: ' + name + '\n' +
@@ -746,24 +736,13 @@
     var encodedMessage = encodeURIComponent(message);
 
     var url =
-  'https://wa.me/' +
-  WHATSAPP_NUMBER +
-  '?text=' +
-  encodedMessage;
+      'https://wa.me/' +
+      WHATSAPP_NUMBER +
+      '?text=' +
+      encodedMessage;
 
-    var btn = form.querySelector('button');
-    var original = btn.textContent;
-    btn.textContent = 'Opening WhatsApp...';
-    btn.disabled = true;
-
-    // Mobile-safe navigation
-    window.location.href = url;
-
-    setTimeout(function(){
-      btn.textContent = original;
-      btn.disabled = false;
-      form.reset();
-    }, 1200);
+    window.open(url, '_blank'); // ✅ mobile-safe
+    form.reset();
   });
 })();
 
