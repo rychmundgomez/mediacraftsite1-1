@@ -448,10 +448,8 @@
         </div>
 
         <div style="display:flex;gap:8px;align-items:center">
-          <a class="btn" href="https://wa.me/233540281796" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
           <a class="btn ghost" href="mailto:gomezrychmund244@gmail.com">Email Us</a>
         </div>
-      </div>
 
       <div class="contact-row">
         <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
@@ -702,12 +700,12 @@
       announceCurrent();
     })();
 
-  // ---- Micro form submit handler (WhatsApp) ----
+ // ---- Micro form submit handler (WhatsApp + date/time + project) ----
 (function(){
   var form = document.getElementById('microContact');
   if(!form) return;
 
-  // CHANGE THIS TO YOUR WHATSAPP NUMBER (NO +, NO SPACES)
+  // WhatsApp number: country code + number (NO +, NO spaces)
   var WHATSAPP_NUMBER = '233540281796';
 
   form.addEventListener('submit', function(e){
@@ -715,27 +713,49 @@
 
     var name = form.name.value.trim();
     var email = form.email.value.trim();
+    var project = form.project.value.trim();
 
-    if(!name || !email){
+    if(!name || !email || !project){
       alert('Please fill in all fields.');
       return;
     }
 
+    // Auto date & time (user’s local timezone)
+    var now = new Date();
+    var date = now.toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    var time = now.toLocaleTimeString(undefined, {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    // Plain-text message (encoded once)
     var message =
-      'Hello T.Ultimate Resource👋' +
-      '*Name:* ' + encodeURIComponent(name) + '%0A' +
-      '*Email:* ' + encodeURIComponent(email) + '%0A%0A' +
-      'I would like to discuss a project.';
+      'Hello T.Ultimate Resource 👋\n\n' +
+      'Name: ' + name + '\n' +
+      'Email: ' + email + '\n' +
+      'Date: ' + date + '\n' +
+      'Time: ' + time + '\n\n' +
+      'Project Description:\n' + project;
 
-    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+    var encodedMessage = encodeURIComponent(message);
 
-    // UX feedback
+    var url =
+      'https://wa.me/?phone=' +
+      WHATSAPP_NUMBER +
+      '&text=' +
+      encodedMessage;
+
     var btn = form.querySelector('button');
     var original = btn.textContent;
     btn.textContent = 'Opening WhatsApp...';
     btn.disabled = true;
 
-    window.open(url, '_blank', 'noopener');
+    // Mobile-safe navigation
+    window.location.href = url;
 
     setTimeout(function(){
       btn.textContent = original;
