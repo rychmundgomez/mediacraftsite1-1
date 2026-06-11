@@ -1,761 +1,925 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Ultimate Resource</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
-
-  <!-- Inline SVG favicon -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23345b63'/%3E%3Ctext x='50' y='58' font-size='48' text-anchor='middle' fill='%23fff' font-family='Poppins,Arial' font-weight='700'%3EM%3C/text%3E%3C/svg%3E">
-
-  <meta name="description" content="The Ultimate Resource — crafted design, film, audio and product experiences. Reimagined single-page UI." />
-
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>T.Ultimate Resource — Build · Brand · Engage</title>
+  <meta name="description" content="We connect you with expert creators in design, video, audio, and development. Your vision, expertly crafted."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230a0a0a'/%3E%3Ctext x='50' y='62' font-size='52' text-anchor='middle' fill='%23f5c842' font-family='system-ui' font-weight='700'%3ET%3C/text%3E%3C/svg%3E"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    /* ========================== 
-       Variables & palette
-       ========================== */
-    :root{
-      --bg-1: #0f1720;
-      --bg-2: #071027;
-      --primary: #ffb703;
-      --accent: #00b4d8;
-      --muted: #9aa7b2;
-      --glass: rgba(255,255,255,0.04);
-      --radius: 16px;
-      --gap: 18px;
-      --ease: cubic-bezier(.2,.9,.25,1);
-      --max-width: 1200px;
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    img, video { max-width: 100%; display: block; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --black:    #0a0a0a;
+      --white:    #fafafa;
+      --off:      #f4f2ee;
+      --gold:     #f5c842;
+      --gold-dim: #c49e2a;
+      --ink:      #1a1a1a;
+      --muted:    #6b6b6b;
+      --subtle:   #b0b0b0;
+      --border:   rgba(0,0,0,0.08);
+      --border-w: rgba(255,255,255,0.10);
+      --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+      --r-sm: 10px;
+      --r-md: 16px;
+      --r-lg: 24px;
     }
 
-    /* ==========================
-       Reset + base (mobile-first)
-       ========================== */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
-      color:var(--muted);
-      background: linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 60%);
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      padding:16px;
-      overflow-y:scroll;
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --black: #0a0a0a;
+        --white: #fafafa;
+        --off:   #111111;
+        --ink:   #f0efea;
+        --muted: #888;
+        --subtle:#555;
+        --border: rgba(255,255,255,0.08);
+      }
     }
 
-    /* Reduced motion support */
+    /* ── Base ── */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+      *, *::before, *::after { transition: none !important; animation: none !important; }
     }
 
-    /* Visually-hidden (sr-only) */
-    .sr-only {
-      position: absolute !important;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0,0,0,0);
-      white-space: nowrap; border: 0;
+    /* ── Utilities ── */
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+    .label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: var(--white); line-height: 1.1; }
+    .muted { color: var(--muted); }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Progress bar ── */
+    #progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 100;
+      background: var(--gold); transform-origin: left; transform: scaleX(0);
+      transition: transform 100ms linear;
     }
 
-    /* Container */
-    .shell{
-      max-width:var(--max-width);
-      margin:0 auto;
-      display:flex;
-      flex-direction:column;
-      gap:24px;
+    /* ── Custom cursor ── */
+    .cursor {
+      position: fixed; top: 0; left: 0; width: 10px; height: 10px;
+      background: var(--gold); border-radius: 50%; pointer-events: none;
+      z-index: 9999; transform: translate(-50%,-50%);
+      transition: transform 80ms var(--ease), width 200ms var(--ease), height 200ms var(--ease), opacity 200ms;
+      mix-blend-mode: difference;
     }
+    body.cursor-hover .cursor { width: 28px; height: 28px; }
+    @media (hover: none) { .cursor { display: none; } body { cursor: auto !important; } }
+    body { cursor: none; }
+    a, button, [role="button"] { cursor: none; }
 
-    /* Top navigation (menu removed) */
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      padding:10px;border-radius:12px;backdrop-filter:blur(6px);
+    /* ── Navigation ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      padding: 0 24px;
+      transition: background 300ms var(--ease), border-color 300ms;
     }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--primary)}
-    .brand-mark{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#0af);color:#02111a;font-weight:900;font-size:1.05rem}
-    /* <-- tiny helper so the provided image fills the mark without changing the rest of your styles --> */
-    .brand-mark img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px;}
-    .brand-name{font-weight:700;color:#fff}
-    .brand-tag{font-family:'Playfair Display',serif;color:var(--muted);font-style:italic;font-size:0.85rem}
-
-    .nav-actions{display:flex;gap:10px;align-items:center}
-    .btn{
-      border:0;padding:10px 14px;border-radius:10px;background:var(--primary);color:#071027;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,0.4);
+    .nav.scrolled {
+      background: rgba(10,10,10,0.92);
+      border-bottom: 1px solid var(--border-w);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
-    .ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
-
-    /* Hero */
-    .hero{
-      display:flex;flex-direction:column;gap:14px;padding:18px;border-radius:16px;background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03);
+    .nav-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
     }
-    .hero-grid{display:flex;flex-direction:column;gap:12px}
-    .kicker{font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;font-size:0.78rem}
-    h1.title{margin:0;font-family:'Playfair Display',serif;color:#fff;font-weight:700;font-size:clamp(1.35rem,3vw,2.4rem);line-height:1.05}
-    p.lead{margin:0;color:var(--muted);max-width:60ch}
-
-    /* Visual stage */
-    .visual-stage{position:relative;height:220px;border-radius:12px;overflow:hidden;display:block}
-    .layer{
-      position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform 700ms var(--ease);
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
     }
-    .card-visual{width:86%;max-width:520px;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));box-shadow:0 20px 60px rgba(0,0,0,0.6);color:#fff}
-    .card-visual h3{margin:0 0 6px 0}
-    .card-visual p{margin:0;color:var(--muted)}
-
-    /* Core services in hero (mobile carousel, desktop grid) */
-    .services{
-      display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;
-      padding-top:6px;
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 8px;
+      overflow: hidden; background: #111; flex-shrink: 0;
+      display: grid; place-items: center;
     }
-    .svc{min-width:260px;flex:0 0 auto;background:linear-gradient(90deg,rgba(0,180,216,0.06),rgba(255,183,3,0.02));border-radius:12px;padding:14px;color:#fff;scroll-snap-align:center}
-    .svc h4{margin:0 0 8px 0}
-    .svc p{margin:0;color:var(--muted)}
+    .brand-mark img { width: 100%; height: 100%; object-fit: cover; }
+    .brand-text { display: flex; flex-direction: column; gap: 0; }
+    .brand-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--white); line-height: 1.1; }
+    .brand-sub { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.05em; }
 
-    /* On wider screens, layout the hero services as a grid for better desktop viewing */
-    @media (min-width:720px){
-      .services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;overflow:visible}
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-primary {
+      background: var(--gold); color: var(--black);
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.82rem;
+      padding: 10px 20px; border-radius: var(--r-sm); border: none;
+      cursor: none; letter-spacing: 0.01em;
+      transition: background 180ms, transform 120ms var(--ease), box-shadow 180ms;
     }
-    @media (min-width:1080px){
-      .services{grid-template-columns:repeat(4,1fr)}
+    .btn-primary:hover { background: #ffd84a; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(245,200,66,0.25); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-ghost {
+      background: transparent; color: var(--white);
+      font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.82rem;
+      padding: 9px 18px; border-radius: var(--r-sm);
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: none; letter-spacing: 0.01em;
+      transition: border-color 180ms, background 180ms, transform 120ms;
     }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+    .btn-ghost:active { transform: translateY(0); }
 
-    /* Our Services (How we work) — responsive card grid */
-    .services-grid{
-      display:grid;
-      gap:14px;
-      grid-template-columns:repeat(1,1fr);
-      margin-top:6px;
+    /* ── Hero ── */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding-bottom: 80px;
+      padding-top: 120px;
+      position: relative;
+      overflow: hidden;
     }
-    .services-grid .card{
-      background:linear-gradient(90deg,rgba(0,180,216,0.04),rgba(255,183,3,0.02));
-      padding:16px;border-radius:12px;color:#fff;text-align:left;display:flex;flex-direction:column;gap:8px;
-      min-height:120px;
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(245,200,66,0.07) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 40% at 20% 80%, rgba(0,180,216,0.04) 0%, transparent 60%);
     }
-    .services-grid h3{margin:0;color:var(--primary);font-size:1rem}
-    .services-grid p{margin:0;color:var(--muted);font-size:0.95rem}
-
-    @media(min-width:720px){
-      .services-grid{grid-template-columns:repeat(2,1fr)}
+    .hero-grid-lines {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.025;
+      background-image:
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+      background-size: 80px 80px;
     }
-    @media(min-width:1080px){
-      .services-grid{grid-template-columns:repeat(3,1fr)}
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,200,66,0.10); border: 1px solid rgba(245,200,66,0.25);
+      padding: 6px 14px; border-radius: 100px;
+      margin-bottom: 32px;
     }
+    .hero-eyebrow span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+    .hero-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-    /* Mosaic (CSS columns) */
-    .mosaic-wrap{column-count:1;column-gap:12px;margin-top:6px}
-    .mosaic-card{break-inside:avoid;margin:0 0 12px;border-radius:12px;overflow:hidden;position:relative;background:#0b1b22;border:1px solid rgba(255,255,255,0.03)}
-    .mosaic-card img{width:100%;display:block;height:auto;aspect-ratio:16/10;object-fit:cover;vertical-align:top;transition:transform 480ms var(--ease)}
-    .mosaic-meta{padding:12px}
-    .mosaic-meta h5{margin:0 0 6px 0;color:var(--primary)}
-    .mosaic-meta p{margin:0;color:var(--muted)}
-
-    @media(min-width:720px){
-      .mosaic-wrap{column-count:2}
+    h1.hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5.6rem);
+      font-weight: 800; line-height: 0.95; letter-spacing: -0.03em;
+      color: var(--white); margin-bottom: 28px;
+      max-width: 14ch;
     }
-    @media(min-width:1080px){
-      .mosaic-wrap{column-count:3}
+    .hero-title .accent { color: var(--gold); }
+    .hero-lead {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      color: var(--muted); max-width: 44ch; line-height: 1.7;
+      margin-bottom: 40px;
     }
-
-    /* Timeline */
-    .timeline{display:flex;flex-direction:column;gap:10px}
-    .tl-item{display:flex;gap:12px;align-items:flex-start}
-    .tl-bullet{width:14px;height:14px;border-radius:50%;background:var(--accent);flex:0 0 14px;margin-top:6px}
-    .tl-body h6{margin:0;font-weight:700;color:#fff}
-    .tl-body p{margin:6px 0 0 0;color:var(--muted)}
-
-    /* Footer */
-    footer.sitefoot{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;flex-direction:column;gap:12px}
-    .contact-row{display:flex;flex-direction:column;gap:8px}
-    .micro-form{display:flex;gap:8px}
-    .micro-form input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff}
-
-    /* Micro-form small panel style (contained to footer) */
-    .micro-form.small-panel{flex-direction:column;max-width:420px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:10px}
-    .micro-form.small-panel input, .micro-form.small-panel button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.06)}
-
-    /* Accessibility & focus */
-    :focus{outline:none}
-    a:focus, button:focus, input:focus {box-shadow:0 0 0 4px rgba(255,183,3,0.12);border-radius:8px}
-
-    /* Reveal initial state */
-    .reveal-hidden { transform: translateY(12px); opacity: 0; transition: transform 600ms var(--ease), opacity 540ms var(--ease); }
-
-    /* Micro-UI: custom cursor + typing microcopy */
-    .no-cursor{cursor:none}
-    .cursor-dot{position:fixed;top:0;left:0;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:9999;mix-blend-mode:screen;transition:opacity 160ms}
-    .typewriter{display:inline-block;color:var(--primary);font-weight:700}
-
-    /* Helpers */
-    .muted{color:var(--muted)}
-    .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
-
-    /* Page progress */
-    .page-progress{
-      position:fixed;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--primary));
-      transform-origin:left;transform:scaleX(0);transition:transform 160ms linear; z-index:80;
-      border-bottom-left-radius:4px;border-bottom-right-radius:4px;
+    .hero-cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn-large {
+      background: var(--gold); color: var(--black);
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.92rem;
+      padding: 16px 32px; border-radius: var(--r-md); border: none; cursor: none;
+      transition: background 180ms, transform 120ms var(--ease), box-shadow 180ms;
     }
+    .btn-large:hover { background: #ffd84a; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(245,200,66,0.28); }
+    .btn-large-ghost {
+      background: transparent; color: var(--white);
+      font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.92rem;
+      padding: 15px 28px; border-radius: var(--r-md);
+      border: 1px solid rgba(255,255,255,0.18); cursor: none;
+      transition: border-color 180ms, background 180ms, transform 120ms;
+    }
+    .btn-large-ghost:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
 
-    /* Small responsive tweaks */
-    @media(max-width:520px){
-      .brand-mark{width:40px;height:40px;font-size:0.9rem}
-      .visual-stage{height:180px}
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0.35;
+    }
+    .hero-scroll span { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .hero-scroll-line { width: 1px; height: 40px; background: var(--white); animation: scrollAnim 2s ease infinite; }
+    @keyframes scrollAnim { 0% { transform: scaleY(0); transform-origin: top; opacity: 1; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.5; } }
+
+    /* Hero stats bar */
+    .hero-stats {
+      display: flex; gap: 0; margin-top: 64px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 32px;
+    }
+    .stat-item { flex: 1; padding-right: 32px; }
+    .stat-item:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.08); margin-right: 32px; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+    /* Typewriter line */
+    .hero-typewriter {
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 12px; min-height: 1.4em;
+    }
+    .tw-word { color: var(--gold); font-weight: 500; }
+
+    /* ── Services strip ── */
+    .services-strip {
+      background: var(--gold);
+      padding: 14px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0 36px;
+      font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 600;
+      color: var(--black); letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .marquee-sep { width: 4px; height: 4px; border-radius: 50%; background: rgba(0,0,0,0.3); }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ── Sections ── */
+    section { padding: 100px 0; }
+    section.tight { padding: 60px 0; }
+
+    /* ── Work ── */
+    .section-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px; flex-wrap: wrap;
+    }
+    .section-header-left { display: flex; flex-direction: column; gap: 10px; }
+    .section-link {
+      font-size: 0.82rem; font-weight: 500; color: var(--muted);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: color 180ms;
+    }
+    .section-link:hover { color: var(--white); }
+    .section-link-arrow { display: inline-block; transition: transform 200ms; }
+    .section-link:hover .section-link-arrow { transform: translateX(3px); }
+
+    /* Work grid */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .work-card {
+      border-radius: var(--r-lg); overflow: hidden;
+      background: #111; position: relative;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 280ms, transform 280ms var(--ease);
+      cursor: none;
+    }
+    .work-card:hover { border-color: rgba(255,255,255,0.14); transform: translateY(-4px); }
+    .work-card.large { grid-column: span 2; }
+    .work-img-wrap { position: relative; overflow: hidden; }
+    .work-img-wrap img {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      display: block; transition: transform 600ms var(--ease);
+    }
+    .work-card.large .work-img-wrap img { aspect-ratio: 21/9; }
+    .work-card:hover .work-img-wrap img { transform: scale(1.04); }
+    .work-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+    }
+    .work-meta {
+      padding: 20px 24px 24px;
+    }
+    .work-tag {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    .work-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); line-height: 1.3; }
+    .work-desc { font-size: 0.82rem; color: var(--muted); margin-top: 6px; }
+
+    /* ── Services grid ── */
+    .services-section { background: #0d0d0d; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+    }
+    .svc-card {
+      background: #0d0d0d;
+      padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: background 240ms;
+      cursor: none;
+    }
+    .svc-card:hover { background: #141414; }
+    .svc-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(245,200,66,0.10);
+      display: grid; place-items: center;
+      font-size: 1.2rem;
+    }
+    .svc-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; color: var(--white); }
+    .svc-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Process ── */
+    .process-steps { display: flex; flex-direction: column; }
+    .process-step {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 32px; padding: 36px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      align-items: start;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 500ms var(--ease), transform 500ms var(--ease);
+    }
+    .process-step.visible { opacity: 1; transform: translateY(0); }
+    .process-num {
+      font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+      color: rgba(255,255,255,0.07); line-height: 1; user-select: none;
+    }
+    .process-body { padding-top: 6px; }
+    .process-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--white); margin-bottom: 10px; }
+    .process-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; max-width: 52ch; }
+
+    /* ── CTA Banner ── */
+    .cta-section {
+      background: var(--gold);
+      border-radius: var(--r-lg);
+      padding: 64px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      flex-wrap: wrap;
+    }
+    .cta-title { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--black); line-height: 1.1; }
+    .cta-sub { font-size: 0.95rem; color: rgba(0,0,0,0.6); margin-top: 10px; }
+    .cta-actions { display: flex; gap: 12px; flex-shrink: 0; flex-wrap: wrap; }
+    .btn-dark {
+      background: var(--black); color: var(--white);
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem;
+      padding: 14px 28px; border-radius: var(--r-md); border: none; cursor: none;
+      text-decoration: none; display: inline-block;
+      transition: background 180ms, transform 120ms;
+    }
+    .btn-dark:hover { background: #1a1a1a; transform: translateY(-1px); }
+    .btn-outline-dark {
+      background: transparent; color: var(--black);
+      font-family: 'Inter', sans-serif; font-weight: 500; font-size: 0.9rem;
+      padding: 13px 24px; border-radius: var(--r-md);
+      border: 1.5px solid rgba(0,0,0,0.25); cursor: none;
+      text-decoration: none; display: inline-block;
+      transition: border-color 180ms, background 180ms, transform 120ms;
+    }
+    .btn-outline-dark:hover { border-color: rgba(0,0,0,0.55); background: rgba(0,0,0,0.07); transform: translateY(-1px); }
+
+    /* ── Contact Form ── */
+    .contact-section { background: #0d0d0d; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start;
+    }
+    .contact-left { display: flex; flex-direction: column; gap: 32px; }
+    .contact-detail { display: flex; flex-direction: column; gap: 6px; }
+    .contact-detail-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .contact-detail-val { font-size: 0.95rem; color: var(--white); text-decoration: none; transition: color 180ms; }
+    .contact-detail-val:hover { color: var(--gold); }
+
+    .form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; color: var(--muted); }
+    .form-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--r-sm); padding: 13px 16px;
+      color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      transition: border-color 200ms, background 200ms;
+      outline: none; width: 100%;
+    }
+    .form-input::placeholder { color: rgba(255,255,255,0.25); }
+    .form-input:focus { border-color: var(--gold); background: rgba(245,200,66,0.04); }
+    textarea.form-input { resize: vertical; min-height: 120px; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 48px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-link { font-size: 0.8rem; color: var(--muted); text-decoration: none; transition: color 180ms; }
+    .footer-link:hover { color: var(--white); }
+
+    /* ── Modal ── */
+    dialog {
+      background: #141414; border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--r-lg); padding: 40px;
+      color: var(--white); max-width: 540px; width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); }
+    dialog h3 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+    dialog p { font-size: 0.85rem; color: var(--muted); margin-bottom: 24px; }
+    .dialog-close {
+      position: absolute; top: 16px; right: 16px;
+      background: rgba(255,255,255,0.07); border: none; border-radius: 50%;
+      width: 32px; height: 32px; color: var(--white);
+      display: grid; place-items: center; font-size: 1rem; cursor: none;
+      transition: background 180ms;
+    }
+    .dialog-close:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── Reveal animations ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 80ms; }
+    .reveal-delay-2 { transition-delay: 160ms; }
+    .reveal-delay-3 { transition-delay: 240ms; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .work-grid { grid-template-columns: 1fr; }
+      .work-card.large { grid-column: span 1; }
+      .work-card.large .work-img-wrap img { aspect-ratio: 16/9; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .cta-section { padding: 44px 32px; }
+    }
+    @media (max-width: 640px) {
+      .hero-stats { gap: 0; flex-wrap: wrap; }
+      .stat-item { min-width: 50%; padding-bottom: 16px; }
+      .stat-item:not(:last-child) { border-right: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-actions .btn-ghost { display: none; }
+      .process-step { grid-template-columns: 48px 1fr; gap: 20px; }
+      .process-num { font-size: 2rem; }
+      section { padding: 72px 0; }
+      .cta-section { padding: 36px 24px; }
     }
   </style>
 </head>
-<body class="no-cursor" aria-label="MediaCraft reimagined single page">
+<body>
 
   <!-- Custom cursor -->
-  <div id="cursor" class="cursor-dot" aria-hidden="true" style="background:radial-gradient(circle at 30% 30%, rgba(255,183,3,0.95), rgba(0,180,216,0.65));box-shadow:0 8px 30px rgba(0,0,0,0.6);"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
 
-  <!-- Progress -->
-  <div id="progress" class="page-progress" aria-hidden="true"></div>
+  <!-- Reading progress -->
+  <div id="progress" aria-hidden="true"></div>
 
-  <main class="shell" id="main" role="main">
-
-    <!-- Top navigation (menu removed) -->
-    <nav class="nav" role="navigation" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="MediaCraft home">
-        <div class="brand-mark" aria-hidden="true">
-          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB">
+  <!-- Navigation -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#home" aria-label="T.Ultimate Resource home">
+        <div class="brand-mark">
+          <img src="https://i.ibb.co/KYhfdJK/7-D218-D48-FB7-E-4275-B4-E2-A647-CBD9-B3-BB.png" alt="T.Ultimate Resource logo"/>
         </div>
-        <div>
-          <div class="brand-name">MediaCraft</div>
-          <div class="brand-tag">Build · Brand · Engage</div>
+        <div class="brand-text">
+          <div class="brand-name">T.Ultimate Resource</div>
+          <div class="brand-sub">Build · Brand · Engage</div>
         </div>
       </a>
-
-      <div class="nav-actions" role="group" aria-label="Primary actions">
-        <button class="btn" id="hireBtn">Hire a Creator</button>
-        <button class="btn ghost" id="portfolioBtn">Portfolio</button>
+      <div class="nav-actions">
+        <button class="btn-ghost" id="portfolioBtn">View Work</button>
+        <button class="btn-primary" id="hireBtn">Hire a Creator</button>
       </div>
-    </nav>
+    </div>
+  </nav>
+
+  <main id="main">
 
     <!-- Hero -->
-    <header class="hero" id="home" aria-labelledby="heroTitle">
-      <div class="hero-grid">
-        <div class="kicker">The Ultimate Resource</div>
-        <h1 id="heroTitle" class="title">Your Digital Command Center For Creative Excellence.</h1>
-
-       <p class="lead">   At <strong>T.Ultimate Resource,</strong> we turn bold ideas into powerful realities.        </p>
- <p class="lead">  From sleek websites and standout brands to chart-ready music and marketing that moves people. </p>
-
-        <p class="lead">  We connect you with the talent to make it happen. <strong>Your next chapter starts here. Your vision, expertly crafted. </strong> </p>
- <p class="lead">   <strong>Build | Brand | Engage.</strong> </p>
-
-        <p class="lead">   ...   <span class="typewriter" aria-hidden="true"></span> </p>
-
-        <div class="section-head">
-          <strong style="color:#fff">Core Services</strong>
-          <small class="muted">Swipe or arrow through</small>
+    <section class="hero" id="home">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="container hero-content">
+        <div class="hero-eyebrow" aria-label="Status: accepting new projects">
+          <div class="hero-dot" aria-hidden="true"></div>
+          <span>Accepting New Projects</span>
         </div>
-
-        <!-- Core services: mobile carousel, desktop grid (switches via CSS) -->
-        <div class="services" role="list" aria-label="Services carousel" aria-roledescription="carousel" tabindex="0">
-          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc1" data-index="0">
-            <h4 id="svc1">Brand Strategy</h4>
-            <p>Identity systems, tone, and go-to-market craft.</p>
-          </article>
-
-          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc2" data-index="1">
-            <h4 id="svc2">Video & Motion</h4>
-            <p>Short films, ads, and platform-optimised edits.</p>
-          </article>
-
-          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc3" data-index="2">
-            <h4 id="svc3">Audio Production</h4>
-            <p>Compositions, sound design and sonic branding.</p>
-          </article>
-
-          <article class="svc" role="listitem" tabindex="0" aria-labelledby="svc4" data-index="3">
-            <h4 id="svc4">Product Design</h4>
-            <p>UX/UI, prototypes and interaction systems.</p>
-          </article>
+        <div class="hero-typewriter" aria-live="polite" aria-label="We specialise in">
+          We specialise in <span class="tw-word" id="tw"></span>
         </div>
-      </div>
-
-      <div class="visual-stage" aria-hidden="true">
-        <div class="layer" style="transform:translate3d(-8px,-8px,0) scale(1.00)">
-          <div class="card-visual">
-            <h3>Studio Snapshot</h3>
-            <p>Small teams, big ideas!</p>
+        <h1 class="hero-title">
+          Creative Talent.<br><span class="accent">Expertly</span> Matched.
+        </h1>
+        <p class="hero-lead">
+          Bold ideas deserve exceptional execution. We connect you with verified creators in design, video, audio, and development — from brief to delivery.
+        </p>
+        <div class="hero-cta">
+          <button class="btn-large" id="heroHireBtn">Start a Project</button>
+          <button class="btn-large-ghost" id="heroPortfolioBtn">See Our Work</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">50+</div>
+            <div class="stat-label">Projects delivered</div>
           </div>
-        </div>
-
-        <div class="layer" style="transform:translate3d(10px,10px,0) scale(1.05)">
-          <div class="card-visual visual-feature">
-            <h3>Featured Project</h3>
-            <p>Increased brand lift/reach.</p>
+          <div class="stat-item">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Core disciplines</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1 day</div>
+            <div class="stat-label">Average first response</div>
           </div>
         </div>
       </div>
-    </header>
-
-    <!-- Portfolio -->
-    <section aria-labelledby="works" style="display:flex;flex-direction:column;gap:12px">
-      <div class="section-head">
-        <h2 id="works" style="margin:0;color:#fff">Selected Work</h2>
-        <div class="muted">A rotation selection of projects</div>
-      </div>
-
-      <div class="mosaic-wrap" role="list">
-        <!-- 1 -->
-        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m1">
-          <img
-            src="https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg"
-            srcset="
-              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 1200w,
-              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 800w,
-              https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg 480w
-            "
-            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
-            alt="Lunar Tea — Visual identity snapshot"
-            loading="lazy" decoding="async" />
-          <div class="mosaic-meta">
-            <h5 id="m1">FrameCraft — Video Editing & Creation</h5>
-            <p>Direction, cutting, effects, and final mastering.</p>
-          </div>
-        </article>
-
-        <!-- 2 -->
-        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m2">
-          <img
-            src="https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg"
-            srcset="
-              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 1200w,
-              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 800w,
-              https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg 480w
-            "
-            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
-            alt="A Quiet Moment — short film still"
-            loading="lazy" decoding="async" />
-          <div class="mosaic-meta">
-            <h5 id="m2">PixelStory — Graphic Design</h5>
-            <p>Layouts, illustrations, and creative visual storytelling.</p>
-          </div>
-        </article>
-
-        <!-- 3 -->
-        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m3">
-          <img
-            src="https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg"
-            srcset="
-              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 1200w,
-              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 800w,
-              https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg 480w
-            "
-            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
-            alt="Night Drive — studio console"
-            loading="lazy" decoding="async" />
-          <div class="mosaic-meta">
-            <h5 id="m3">CodeForge — Coding & Programming</h5>
-            <p>Development, optimization, and interactive solutions.</p>
-          </div>
-        </article>
-
-        <!-- 4 -->
-        <article class="mosaic-card reveal-hidden" role="listitem" tabindex="0" aria-labelledby="m4">
-          <img
-            src="https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png"
-            srcset="
-              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 1200w,
-              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 800w,
-              https://i.ibb.co/5W0Fk6zK/8-AD61-AE4-4517-4146-BB8-E-503602-E29864.png 480w
-            "
-            sizes="(max-width:600px) 100vw, (max-width:1080px) 48vw, 33vw"
-            alt="Trackr — product UI sample"
-            loading="lazy" decoding="async" />
-          <div class="mosaic-meta">
-            <h5 id="m4">BrandAura — Branding & Visual Identity</h5>
-            <p>Logo systems, style guides, and market presence.</p>
-          </div>
-        </article>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
       </div>
     </section>
 
-    <!-- Our Services: improved grid (separate from hero carousel) -->
-    <section id="ourServices" aria-labelledby="ourServicesTitle">
-      <h3 id="ourServicesTitle" style="margin:0;color:#fff">Our Services</h3>
-      <div class="services-grid" role="list" aria-label="Detailed services">
-        <div class="card" role="listitem">
-          <h3>Graphic & Brand Designing</h3>
-          <p>Logos, branding, and visual assets crafted to make an impact.</p>
+    <!-- Marquee strip -->
+    <div class="services-strip" aria-hidden="true">
+      <div class="marquee-track" id="marquee">
+        <span class="marquee-item">Graphic Design <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Video Editing <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Audio Production <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Web Development <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Digital Marketing <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Brand Identity <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Motion Design <span class="marquee-sep"></span></span>
+        <span class="marquee-item">UX / UI Design <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Graphic Design <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Video Editing <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Audio Production <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Web Development <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Digital Marketing <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Brand Identity <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Motion Design <span class="marquee-sep"></span></span>
+        <span class="marquee-item">UX / UI Design <span class="marquee-sep"></span></span>
+      </div>
+    </div>
+
+    <!-- Selected Work -->
+    <section id="work">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="label">Selected Work</div>
+            <h2 class="section-title">Projects we're proud of</h2>
+          </div>
+          <a href="#work" class="section-link">
+            See all work <span class="section-link-arrow">→</span>
+          </a>
         </div>
-        <div class="card" role="listitem">
-          <h3>Video & Effects Editing</h3>
-          <p>Producing compelling visuals that speak to your audience.</p>
-        </div>
-        <div class="card" role="listitem">
-          <h3>Music & Audio Editing</h3>
-          <p>High-quality music production and sound engineering.</p>
-        </div>
-        <div class="card" role="listitem">
-          <h3>Web & App Development</h3>
-          <p>Custom websites, apps, and platforms built by expert developers.</p>
-        </div>
-        <div class="card" role="listitem">
-          <h3>Digital Marketing</h3>
-          <p>Targeted strategies for growth, visibility, and engagement.</p>
+        <div class="work-grid">
+          <article class="work-card large reveal" tabindex="0" aria-labelledby="w1">
+            <div class="work-img-wrap">
+              <img src="https://i.ibb.co/FmJFNyG/pexels-alexfu-1188751.jpg" alt="FrameCraft video editing project" loading="lazy" decoding="async"/>
+              <div class="work-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tag">Video &amp; Motion</div>
+              <div class="work-title" id="w1">FrameCraft — Video Editing &amp; Creation</div>
+              <div class="work-desc">Direction, cutting, effects, and final mastering for launch campaign.</div>
+            </div>
+          </article>
+          <article class="work-card reveal reveal-delay-1" tabindex="0" aria-labelledby="w2">
+            <div class="work-img-wrap">
+              <img src="https://i.ibb.co/MDtH7tJ/pexels-caio-567592.jpg" alt="PixelStory graphic design project" loading="lazy" decoding="async"/>
+              <div class="work-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tag">Graphic Design</div>
+              <div class="work-title" id="w2">PixelStory — Visual Storytelling</div>
+              <div class="work-desc">Layouts, illustrations, and creative direction.</div>
+            </div>
+          </article>
+          <article class="work-card reveal reveal-delay-2" tabindex="0" aria-labelledby="w3">
+            <div class="work-img-wrap">
+              <img src="https://i.ibb.co/377ymhS/pexels-luis-gomes-166706-546819.jpg" alt="CodeForge development project" loading="lazy" decoding="async"/>
+              <div class="work-img-overlay" aria-hidden="true"></div>
+            </div>
+            <div class="work-meta">
+              <div class="work-tag">Development</div>
+              <div class="work-title" id="w3">CodeForge — Web Platform</div>
+              <div class="work-desc">Development, optimization, and interactive solutions.</div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- How we work -->
-    <section aria-labelledby="how" style="display:flex;flex-direction:column;gap:12px">
-      <div class="section-head">
-        <h2 id="how" style="margin:0;color:#fff">How We Work</h2>
-        <div class="muted">A simple, humane process</div>
-      </div>
-
-      <div class="timeline" role="list">
-        <div class="tl-item reveal-hidden" role="listitem">
-          <div class="tl-bullet" aria-hidden="true"></div>
-          <div class="tl-body">
-            <h6>Onboard & Assign</h6>
-            <p>We listen, understand your vision and match you with the right expert.</p>
+    <!-- Services -->
+    <section class="services-section tight" id="services">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="label">What We Do</div>
+            <h2 class="section-title">Five disciplines,<br>one studio</h2>
           </div>
         </div>
-
-        <div class="tl-item reveal-hidden" role="listitem">
-          <div class="tl-bullet" aria-hidden="true" style="background:var(--primary)"></div>
-          <div class="tl-body">
-            <h6>Manage & Review</h6>
-            <p>We oversee project execution and quality control.</p>
+        <div class="services-grid" role="list">
+          <div class="svc-card reveal" role="listitem">
+            <div class="svc-icon" aria-hidden="true">🎨</div>
+            <div class="svc-name">Graphic &amp; Brand Design</div>
+            <div class="svc-desc">Logos, identity systems, and visual assets crafted to command attention and build recognition.</div>
           </div>
-        </div>
-
-        <div class="tl-item reveal-hidden" role="listitem">
-          <div class="tl-bullet" aria-hidden="true" style="background:linear-gradient(90deg,var(--primary),var(--accent))"></div>
-          <div class="tl-body">
-            <h6>Build, Polish & Deliver</h6>
-            <p>You get high-quality delivery, seamless iteration, and smooth handoff.</p>
+          <div class="svc-card reveal reveal-delay-1" role="listitem">
+            <div class="svc-icon" aria-hidden="true">🎬</div>
+            <div class="svc-name">Video &amp; Motion</div>
+            <div class="svc-desc">Short-form content, brand films, ads, and platform-optimised edits that move people.</div>
+          </div>
+          <div class="svc-card reveal reveal-delay-2" role="listitem">
+            <div class="svc-icon" aria-hidden="true">🎵</div>
+            <div class="svc-name">Music &amp; Audio</div>
+            <div class="svc-desc">High-quality music production, sound design, and sonic branding that makes ears take notice.</div>
+          </div>
+          <div class="svc-card reveal" role="listitem">
+            <div class="svc-icon" aria-hidden="true">💻</div>
+            <div class="svc-name">Web &amp; App Development</div>
+            <div class="svc-desc">Custom websites, apps, and platforms built by expert developers. Fast, accessible, scalable.</div>
+          </div>
+          <div class="svc-card reveal reveal-delay-1" role="listitem">
+            <div class="svc-icon" aria-hidden="true">📢</div>
+            <div class="svc-name">Digital Marketing</div>
+            <div class="svc-desc">Targeted growth strategies, content plans, and campaigns engineered for visibility and engagement.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Contact footer -->
-    <footer class="sitefoot" role="contentinfo" aria-labelledby="contactTitle">
-      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
-        <div>
-          <h3 id="contactTitle" style="margin:0;color:#fff">Ready to begin?</h3>
-          <p class="muted">Tell us about your project and we'll reply within one business day.</p>
+    <!-- Process -->
+    <section id="process">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-header-left">
+            <div class="label">How We Work</div>
+            <h2 class="section-title">Simple process,<br>exceptional output</h2>
+          </div>
         </div>
-
-        <div style="display:flex;gap:8px;align-items:center">
-          <a class="btn" href="https://wa.me/233540281796" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
-          <a class="btn ghost" href="mailto:gomezrychmund244@gmail.com">Email Us</a>
+        <div class="process-steps" role="list">
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">01</div>
+            <div class="process-body">
+              <div class="process-title">Brief &amp; Match</div>
+              <div class="process-desc">We listen carefully, understand your vision, and match you with the right expert from our vetted network. No guesswork, no mismatches.</div>
+            </div>
+          </div>
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">02</div>
+            <div class="process-body">
+              <div class="process-title">Manage &amp; Review</div>
+              <div class="process-desc">We oversee every stage of project execution, maintain quality standards, and keep communication clear throughout.</div>
+            </div>
+          </div>
+          <div class="process-step" role="listitem">
+            <div class="process-num" aria-hidden="true">03</div>
+            <div class="process-body">
+              <div class="process-title">Deliver &amp; Iterate</div>
+              <div class="process-desc">You receive high-quality work, refined through seamless revision cycles, with a smooth final handoff and ongoing support if needed.</div>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="contact-row">
-        <form id="microContact" class="micro-form small-panel" aria-label="Quick contact form">
-          <input type="text" name="name" placeholder="Your name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <textarea name="project" placeholder="Project description" rows="3" required></textarea>
-          <button class="btn" type="submit">Send</button>
-        </form>
+    <!-- CTA Banner -->
+    <section class="tight" aria-labelledby="ctaTitle">
+      <div class="container">
+        <div class="cta-section reveal">
+          <div>
+            <h2 class="cta-title" id="ctaTitle">Ready to build something remarkable?</h2>
+            <p class="cta-sub">Tell us about your project. We'll reply within one business day.</p>
+          </div>
+          <div class="cta-actions">
+            <a href="https://wa.me/233540281796" target="_blank" rel="noopener noreferrer" class="btn-dark">Chat on WhatsApp</a>
+            <a href="mailto:gomezrychmund244@gmail.com" class="btn-outline-dark">Send an Email</a>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <small class="muted">© <span id="yr"></span> MediaCraft — All rights reserved</small>
-        <small class="muted">Designed for accessibility & performance</small>
+    <!-- Contact -->
+    <section class="contact-section" id="contact" aria-labelledby="contactTitle">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-left reveal">
+            <div>
+              <div class="label">Get in Touch</div>
+              <h2 class="section-title" id="contactTitle" style="margin-top:10px">Start your<br>project today</h2>
+              <p style="margin-top:16px;font-size:0.9rem;color:var(--muted);max-width:36ch;line-height:1.7;">Fill in the form and we'll reach out via WhatsApp with your message pre-formatted and ready to send.</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              <div class="contact-detail">
+                <div class="contact-detail-label">WhatsApp</div>
+                <a href="https://wa.me/233540281796" class="contact-detail-val" target="_blank" rel="noopener noreferrer">+233 54 028 1796</a>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-detail-label">Email</div>
+                <a href="mailto:gomezrychmund244@gmail.com" class="contact-detail-val">gomezrychmund244@gmail.com</a>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-detail-label">Response time</div>
+                <div class="contact-detail-val">Within 1 business day</div>
+              </div>
+            </div>
+          </div>
+
+          <form id="contactForm" class="form reveal reveal-delay-1" aria-label="Project enquiry form" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="fname">Your name</label>
+                <input class="form-input" type="text" id="fname" name="name" placeholder="e.g. Kwame Asante" required autocomplete="name"/>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="femail">Email address</label>
+                <input class="form-input" type="email" id="femail" name="email" placeholder="you@example.com" required autocomplete="email"/>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="fproject">Project description</label>
+              <textarea class="form-input" id="fproject" name="project" placeholder="Tell us what you need — service type, goals, timeline..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="align-self:flex-start;padding:14px 28px;font-size:0.9rem;border-radius:var(--r-md);">
+              Send via WhatsApp
+            </button>
+            <p style="font-size:0.75rem;color:var(--muted);margin-top:-4px;">Submitting opens WhatsApp with your message ready to send.</p>
+          </form>
+        </div>
       </div>
-    </footer>
+    </section>
+
   </main>
 
-  <!-- Accessible modal (Hire form) -->
-  <dialog id="hireModal" aria-labelledby="hireTitle">
-    <form method="dialog" style="padding:18px;min-width:320px;max-width:620px;display:flex;flex-direction:column;gap:10px">
-      <h3 id="hireTitle">Quick Brief</h3>
-      <label>
-        <span class="sr-only">Your name</span>
-        <input name="fullname" placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)" required />
-      </label>
-      <label>
-        <span class="sr-only">Project summary</span>
-        <textarea name="project" rows="4" placeholder="Short project summary" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)" required></textarea>
-      </label>
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <small class="footer-copy">© <span id="yr"></span> T.Ultimate Resource — All rights reserved</small>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="#work" class="footer-link">Work</a>
+          <a href="#services" class="footer-link">Services</a>
+          <a href="#contact" class="footer-link">Contact</a>
+          <a href="https://wa.me/233540281796" class="footer-link" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
 
-      <div style="display:flex;gap:8px;justify-content:flex-end">
-        <button class="btn" type="submit">Send</button>
-        <button class="btn ghost" type="button" id="closeHire">Cancel</button>
+  <!-- Hire Modal -->
+  <dialog id="hireModal" aria-labelledby="hireTitle" style="position:relative;">
+    <button class="dialog-close" id="closeHire" aria-label="Close">✕</button>
+    <h3 id="hireTitle">Start a Project</h3>
+    <p>Share a quick brief and we'll match you with the right creator.</p>
+    <form method="dialog" class="form" aria-label="Quick hire form">
+      <div class="form-field">
+        <label class="form-label" for="hname">Your name</label>
+        <input class="form-input" type="text" id="hname" name="fullname" placeholder="Your name" required/>
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="hproject">Project summary</label>
+        <textarea class="form-input" id="hproject" name="project" rows="4" placeholder="What are you building? What's the timeline?" required></textarea>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:4px;">
+        <button class="btn-ghost" type="button" id="cancelHire">Cancel</button>
+        <button class="btn-primary" type="submit" style="padding:12px 24px;">Send Brief</button>
       </div>
     </form>
   </dialog>
 
   <script>
-    /* ======================================
-       Interactions + accessibility (clean)
-       ====================================== */
+    // ── Year ──
+    var yr = document.getElementById('yr');
+    if(yr) yr.textContent = new Date().getFullYear();
 
-    // Populate year
-    var yrEl = document.getElementById('yr');
-    if(yrEl) yrEl.textContent = new Date().getFullYear();
-
-    // ---- Page progress (top) ----
+    // ── Reading progress ──
     (function(){
-      var progress = document.getElementById('progress');
+      var bar = document.getElementById('progress');
       function update(){
-        var scrolled = window.scrollY || window.pageYOffset;
-        var height = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = height ? (scrolled / height) : 0;
-        if(progress) progress.style.transform = 'scaleX(' + Math.min(Math.max(pct,0),1) + ')';
+        var s = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+        if(bar) bar.style.transform = 'scaleX(' + (h ? Math.min(s/h,1) : 0) + ')';
       }
       window.addEventListener('scroll', update, {passive:true});
-      window.addEventListener('resize', update);
       update();
     })();
 
-    // ---- Custom cursor (cancellable on touch; better perf) ----
+    // ── Sticky nav ──
     (function(){
-      var cursor = document.getElementById('cursor');
-      if(!cursor) return;
-      var x = window.innerWidth/2, y = window.innerHeight/2;
-      var tx = x, ty = y;
-      var rafId = null;
+      var nav = document.getElementById('nav');
+      function check(){ nav && nav.classList.toggle('scrolled', window.scrollY > 40); }
+      window.addEventListener('scroll', check, {passive:true});
+      check();
+    })();
 
-      function loop(){
-        tx += (x - tx) * 0.18;
-        ty += (y - ty) * 0.18;
-        cursor.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0) translate(-50%,-50%)';
-        rafId = requestAnimationFrame(loop);
-      }
+    // ── Custom cursor ──
+    (function(){
+      var c = document.getElementById('cursor');
+      if(!c) return;
+      var x=0,y=0,tx=0,ty=0,raf;
+      document.addEventListener('mousemove',function(e){ x=e.clientX; y=e.clientY; },{ passive:true });
+      function loop(){ tx+=(x-tx)*0.2; ty+=(y-ty)*0.2; c.style.left=tx+'px'; c.style.top=ty+'px'; raf=requestAnimationFrame(loop); }
       loop();
-
-      function onMouseMove(e){
-        x = e.clientX; y = e.clientY;
-        if(cursor.style.opacity === '0') cursor.style.opacity = '1';
-      }
-      document.addEventListener('mousemove', onMouseMove);
-
-      function disableCursorForTouch(){
-        cursor.style.opacity = '0';
-        if(rafId) cancelAnimationFrame(rafId);
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('touchstart', disableCursorForTouch);
-        document.body.classList.remove('no-cursor');
-      }
-      document.addEventListener('touchstart', disableCursorForTouch, {passive:true});
-    })();
-
-    // ---- Typing microcopy in hero ----
-    (function(){
-      var words = ['branding.', 'storytelling.', 'sound engineering.', 'graphic designing.', 'product thinking.', 'programming.'];
-      var el = document.querySelector('.typewriter');
-      if(!el) return;
-      var i = 0, j = 0, forward = true, timeout = null;
-      function tick(){
-        var w = words[i];
-        el.textContent = w.slice(0,j) + (j % 2 === 0 ? ' ' : '\u258F');
-        if(forward){
-          j++;
-          if(j > w.length){ forward = false; timeout = setTimeout(tick, 900); return; }
-        } else {
-          j--;
-          if(j === 0){ forward = true; i = (i+1) % words.length; }
-        }
-        timeout = setTimeout(tick, forward ? 90 : 30);
-      }
-      tick();
-      window.addEventListener('unload', function(){ if(timeout) clearTimeout(timeout); });
-    })();
-
-    // ---- Dialog controls, focus management, portfolio scroll ----
-    (function(){
-      var modal = document.getElementById('hireModal');
-      var openBtn = document.getElementById('hireBtn');
-      var close = document.getElementById('closeHire');
-      var portfolioBtn = document.getElementById('portfolioBtn');
-
-      var lastFocusedEl = null;
-
-      // Open modal
-      if(openBtn){
-        openBtn.addEventListener('click', function(ev){
-          if(typeof modal.showModal === 'function'){
-            lastFocusedEl = document.activeElement;
-            modal.showModal();
-            var first = modal.querySelector('input,textarea,button');
-            if(first) first.focus();
-          } else {
-            location.href = 'mailto:hello@mediacraft.example';
-          }
-        });
-      }
-
-      // Close modal
-      if(close){
-        close.addEventListener('click', function(){ if(typeof modal.close === 'function') modal.close(); });
-      }
-      if(modal){
-        modal.addEventListener('close', function(){ if(lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus(); });
-        modal.addEventListener('cancel', function(){ modal.close(); });
-      }
-
-      // Portfolio button scroll
-      if(portfolioBtn){
-        portfolioBtn.addEventListener('click', function(e){
-          e.preventDefault();
-          var target = document.getElementById('works');
-          if(target){
-            target.setAttribute('tabindex','-1');
-            target.scrollIntoView({behavior:'smooth',block:'start'});
-            setTimeout(function(){ target.focus(); target.removeAttribute('tabindex'); }, 500);
-          }
-        });
-      }
-    })();
-
-    // ---- Mosaic subtle parallax on mousemove (with transform reset) ----
-    (function(){
-      var items = document.querySelectorAll('.mosaic-card');
-      items.forEach(function(el){
-        el.addEventListener('mousemove', function(e){
-          var rect = el.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var cy = rect.top + rect.height/2;
-          var dx = (e.clientX - cx) / rect.width;
-          var dy = (e.clientY - cy) / rect.height;
-          var img = el.querySelector('img');
-          if(img) img.style.transform = 'scale(1.03) translate(' + (dx * 6) + 'px, ' + (dy * 6) + 'px)';
-        }, {passive:true});
-        el.addEventListener('mouseleave', function(){
-          var img = el.querySelector('img');
-          if(img) img.style.transform = '';
+      ['a','button','[role="button"]'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(el){
+          el.addEventListener('mouseenter',function(){ document.body.classList.add('cursor-hover'); });
+          el.addEventListener('mouseleave',function(){ document.body.classList.remove('cursor-hover'); });
         });
       });
+      document.addEventListener('touchstart',function(){
+        c.style.display='none'; if(raf) cancelAnimationFrame(raf);
+        document.body.style.cursor='auto';
+        document.querySelectorAll('a,button').forEach(function(el){ el.style.cursor='auto'; });
+      },{once:true,passive:true});
     })();
 
-    // ---- Visual stage parallax on scroll ----
+    // ── Typewriter ──
     (function(){
-      var layers = document.querySelectorAll('.visual-stage .layer');
-      function onScroll(){
-        var y = window.scrollY || window.pageYOffset;
-        layers.forEach(function(el, idx){
-          var factor = (idx+1) * 0.02;
-          el.style.transform = 'translate3d(' + (((y*factor)%40) - 20) + 'px,' + (((y*factor)%28) - 14) + 'px,0)';
-        });
+      var words = ['branding','video editing','sound engineering','graphic design','web development','digital marketing'];
+      var el = document.getElementById('tw');
+      if(!el) return;
+      var i=0,j=0,fwd=true,t;
+      function tick(){
+        var w=words[i];
+        el.textContent = w.slice(0,j) + (j<w.length && j%2===0?'▎':'');
+        if(fwd){ j++; if(j>w.length){ fwd=false; t=setTimeout(tick,1000); return; } }
+        else { j--; if(j===0){ fwd=true; i=(i+1)%words.length; } }
+        t=setTimeout(tick,fwd?80:30);
       }
-      window.addEventListener('scroll', onScroll, {passive:true});
-      onScroll();
+      tick();
+      window.addEventListener('unload',function(){ clearTimeout(t); });
     })();
 
-    // ---- Reveal animations for timeline & mosaic (IntersectionObserver) ----
+    // ── Scroll reveal ──
     (function(){
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if(e.isIntersecting){
-            e.target.classList.remove('reveal-hidden');
-            e.target.style.transform = 'translateY(0)';
-            e.target.style.opacity = '1';
-            io.unobserve(e.target);
-          }
+          if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
         });
-      }, {threshold:0.12});
-      document.querySelectorAll('.mosaic-card,.tl-item').forEach(function(el){
-        el.style.willChange = 'transform,opacity';
-        io.observe(el);
-      });
+      },{threshold:0.1});
+      document.querySelectorAll('.reveal,.process-step').forEach(function(el){ io.observe(el); });
     })();
 
-    // ---- Services carousel keyboard nav & accessible announce ----
+    // ── Modal ──
     (function(){
-      var track = document.querySelector('.services');
-      if(!track) return;
-      track.addEventListener('keydown', function(e){
-        if(e.key === 'ArrowRight') track.scrollBy({left:260,behavior:'smooth'});
-        if(e.key === 'ArrowLeft') track.scrollBy({left:-260,behavior:'smooth'});
-      });
-      track.setAttribute('tabindex','0');
-
-      // live region for screen readers
-      var live = document.createElement('div');
-      live.setAttribute('aria-live','polite');
-      live.className = 'sr-only';
-      document.body.appendChild(live);
-
-      var items = Array.from(track.querySelectorAll('.svc'));
-      function announceCurrent(){
-        var best = items[0], bestDist = Infinity;
-        var center = window.innerWidth / 2;
-        items.forEach(function(it){
-          var rect = it.getBoundingClientRect();
-          var cx = rect.left + rect.width/2;
-          var dist = Math.abs(cx - center);
-          if(dist < bestDist){ bestDist = dist; best = it; }
-        });
-        var title = best.querySelector('h4') ? best.querySelector('h4').textContent : 'Service';
-        live.textContent = 'Current service: ' + title;
-      }
-
-      var t = null;
-      track.addEventListener('scroll', function(){
-        clearTimeout(t);
-        t = setTimeout(announceCurrent, 250);
-      }, {passive:true});
-      // initial
-      announceCurrent();
+      var modal = document.getElementById('hireModal');
+      var open1 = document.getElementById('hireBtn');
+      var open2 = document.getElementById('heroHireBtn');
+      var close = document.getElementById('closeHire');
+      var cancel = document.getElementById('cancelHire');
+      var last;
+      function openModal(){ last=document.activeElement; if(modal.showModal) modal.showModal(); else modal.setAttribute('open',''); var f=modal.querySelector('input'); if(f) f.focus(); }
+      if(open1) open1.addEventListener('click', openModal);
+      if(open2) open2.addEventListener('click', openModal);
+      if(close) close.addEventListener('click',function(){ modal.close(); });
+      if(cancel) cancel.addEventListener('click',function(){ modal.close(); });
+      if(modal) modal.addEventListener('close',function(){ if(last) last.focus(); });
     })();
 
-    // ---- Micro form submit handler (WhatsApp – mobile guaranteed) ----
-(function(){
-  var form = document.getElementById('microContact');
-  if(!form) return;
+    // ── Portfolio scroll ──
+    (function(){
+      var btns = [document.getElementById('portfolioBtn'), document.getElementById('heroPortfolioBtn')];
+      btns.forEach(function(btn){
+        if(!btn) return;
+        btn.addEventListener('click',function(e){
+          e.preventDefault();
+          var t = document.getElementById('work');
+          if(t){ t.scrollIntoView({behavior:'smooth',block:'start'}); }
+        });
+      });
+    })();
 
-  var WHATSAPP_NUMBER = '233540281796'; // no +, no spaces
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-
-    var name = form.name.value.trim();
-    var email = form.email.value.trim();
-    var project = form.project.value.trim();
-
-    if(!name || !email || !project){
-      alert('Please fill in all fields.');
-      return;
-    }
-
-    var now = new Date();
-    var date = now.toLocaleDateString();
-    var time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    var message =
-      '*Hello T.Ultimate Resource* 👋💻\n\n' +
-      '*Name:* ' + name + '\n' +
-      '*Email:* ' + email + '\n' +
-      '*Date:* ' + date + '\n' +
-      '*Time:* ' + time + '\n\n' +
-      '*Project Description:*\n' +
-      project;
-
-    var encoded = encodeURIComponent(message);
-
-    // 1️⃣ Try opening WhatsApp app directly (BEST for mobile)
-    var appUrl = 'whatsapp://send?phone=' + WHATSAPP_NUMBER + '&text=' + encoded;
-
-    // 2️⃣ Fallback to web WhatsApp
-    var webUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encoded;
-
-    // Must be triggered directly by user action
-    window.location.href = appUrl;
-
-    // Fallback after short delay
-    setTimeout(function(){
-      window.location.href = webUrl;
-    }, 500);
-
-    form.reset();
-  });
-})();
-
-    // NOTE: small playful easter egg intentionally embedded (non-breaking).
+    // ── Contact form → WhatsApp ──
+    (function(){
+      var form = document.getElementById('contactForm');
+      if(!form) return;
+      var NUM = '233540281796';
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var name = (form.name.value||'').trim();
+        var email = (form.email.value||'').trim();
+        var project = (form.project.value||'').trim();
+        if(!name||!email||!project){ return; }
+        var now = new Date();
+        var msg =
+          '*Hello T.Ultimate Resource* 👋\n\n' +
+          '*Name:* ' + name + '\n' +
+          '*Email:* ' + email + '\n' +
+          '*Date:* ' + now.toLocaleDateString() + ' at ' + now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) + '\n\n' +
+          '*Project:*\n' + project;
+        var enc = encodeURIComponent(msg);
+        var app = 'whatsapp://send?phone=' + NUM + '&text=' + enc;
+        var web = 'https://wa.me/' + NUM + '?text=' + enc;
+        window.location.href = app;
+        setTimeout(function(){ window.location.href = web; }, 600);
+        form.reset();
+      });
+    })();
   </script>
 </body>
 </html>
